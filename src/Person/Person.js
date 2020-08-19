@@ -1,12 +1,13 @@
 import React from 'react';
+import './Person.css'
 
 const person = (props) => {
 
   return (
-      <React.Fragment>
-        <h1>Hey! I'm { props.name } and I have { props.age } years old!</h1>
-        <h3>{ props.children }</h3>
-      </React.Fragment>
+      <div className="person-container">
+        <h3>Hey! I'm { props.name } and I have { props.age } years old!</h3>
+        <p>{ props.children }</p>
+      </div>
   )
 };
 

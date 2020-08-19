@@ -1,0 +1,8 @@
+.person-container {
+    position: relative;
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid gray;
+    box-shadow: 5px 5px 5px lightgray;
+    margin: 10px ;
+}
