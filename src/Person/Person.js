@@ -4,9 +4,9 @@ import './Person.css'
 const person = (props) => {
 
   return (
-      <div className="person-container">
-        <h3>Hey! I'm { props.name } and I have { props.age } years old!</h3>
-        <p>{ props.children }</p>
+      <div className="person-container" onClick={props.clickHandler}>
+        <h3>Hey! I'm {props.name} and I have {props.age} years old!</h3>
+        <p>{props.children}</p>
       </div>
   )
 };
