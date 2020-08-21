@@ -21,6 +21,14 @@ class App extends Component {
     this.setState({people});
   }
 
+  inputHandler = (e) => {
+    const newName = e.target.value;
+    const person = this.state.people[0]
+    person.name = newName;
+
+    this.setState({people: [person, ...this.state.people.slice(1)]})
+  }
+
   render() {
     return (
         <div className="App">
@@ -28,10 +36,13 @@ class App extends Component {
           <button onClick={() => this.switchNameHandler('Adolfo')}>Switch Names</button>
           <Person clickHandler={this.switchNameHandler.bind(this, 'Juaum1')}
                   name={this.state.people[0].name}
-                  age={this.state.people[0].age}/>
+                  age={this.state.people[0].age}
+                  input={this.inputHandler}
+          />
           <Person clickHandler={this.switchNameHandler.bind(this, 'Juaum2')}
                   name={this.state.people[1].name}
-                  age={this.state.people[1].age}/>
+                  age={this.state.people[1].age}
+          />
           <Person clickHandler={this.switchNameHandler.bind(this, 'Juaum3')}
                   name={this.state.people[2].name}
                   age={this.state.people[2].age}>

@@ -7,6 +7,7 @@ const person = (props) => {
       <div className="person-container" onClick={props.clickHandler}>
         <h3>Hey! I'm {props.name} and I have {props.age} years old!</h3>
         <p>{props.children}</p>
+        <input type="text" onInput={props.input} value={props.name}/>
       </div>
   )
 };
