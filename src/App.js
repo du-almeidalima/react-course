@@ -7,10 +7,9 @@ class App extends Component {
   state = {
     people: [
       {name: 'Eduardo', age: 23},
-      {name: 'Jolie', age: 25},
+      {name: 'Jolie', age: 25, hobby: 'I really like watching Netflix'},
       {name: 'Juaum', age: 18}
     ],
-    hobby: 'I really like watching Netflix',
     showPeople: false
   }
 
@@ -35,24 +34,19 @@ class App extends Component {
       cursor: 'pointer'
     }
 
-    const people = this.state.showPeople
-        ?
-        (
-            <div>
-              <Person name={this.state.people[0].name} age={this.state.people[0].age} input={this.inputHandler}/>
-              <Person name={this.state.people[1].name} age={this.state.people[1].age}/>
-              <Person name={this.state.people[2].name} age={this.state.people[2].age}>
-                {this.state.hobby}
-              </Person>
-            </div>
-        )
-        : null
-
     return (
         <div className="App">
           <h1>Hello React World</h1>
           <button style={style} onClick={this.togglePeopleHandler}>Toggle People</button>
-          {people}
+          <React.Fragment>
+            {this.state.people.map(person => {
+              return (
+                  <Person name={person.name} age={person.age}>
+                    {person.hobby ? person.hobby : null}
+                  </Person>
+              )
+            })}
+          </React.Fragment>
         </div>
     )
   }
@@ -61,7 +55,6 @@ class App extends Component {
 export default App;
 
 /*
- * There is two ways of passing a function with parameters that are going to be executed in other component
- *  - bind(this, ...args)
- *  - arrow function: () => { this.customFunction('parameter') }
+ * Since React wants to be coolest guy of the squad and use pure JS, we need to make those atrocities in order to
+ * render dynamic content
  */
