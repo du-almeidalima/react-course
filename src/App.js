@@ -35,22 +35,24 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    const people = this.state.showPeople
+        ?
+        (
+            <div>
+              <Person name={this.state.people[0].name} age={this.state.people[0].age} input={this.inputHandler}/>
+              <Person name={this.state.people[1].name} age={this.state.people[1].age}/>
+              <Person name={this.state.people[2].name} age={this.state.people[2].age}>
+                {this.state.hobby}
+              </Person>
+            </div>
+        )
+        : null
+
     return (
         <div className="App">
           <h1>Hello React World</h1>
           <button style={style} onClick={this.togglePeopleHandler}>Toggle People</button>
-          {
-            this.state.showPeople
-                ?
-                <div>
-                  <Person name={this.state.people[0].name} age={this.state.people[0].age} input={this.inputHandler}/>
-                  <Person name={this.state.people[1].name} age={this.state.people[1].age}/>
-                  <Person name={this.state.people[2].name} age={this.state.people[2].age}>
-                    {this.state.hobby}
-                  </Person>
-                </div>
-                : null
-          }
+          {people}
         </div>
     )
   }
