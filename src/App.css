@@ -1,11 +1,8 @@
 .App {
-  margin: 16px;
+    text-align: center;
 }
 
-.App-User {
-  width: 250px;
-  margin: 30px auto;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 3px 3px 15px gray;
+button {
+    display: block;
+    margin: 0 auto;
 }
