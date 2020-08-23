@@ -1,56 +1,80 @@
-import React, { Component } from 'react';
-import ValidationComponent from "./ValidationComponent/ValidationComponent";
-import CharComponent from "./CharComponent/CharComponent";
+import React, {Component} from 'react';
 import './App.css';
+import Person from "./Person/Person";
 
 class App extends Component {
+
   state = {
-    word: ''
+    people: [
+      {id: 1, name: 'Eduardo', age: 23},
+      {id: 2, name: 'Jolie', age: 25, hobby: 'I really like watching Netflix'},
+      {id: 3, name: 'Juaum', age: 18}
+    ],
+    showPeople: false
   }
 
-  inputChangeHandler = (e) => {
-    this.setState({ word: e.target.value })
+  togglePeopleHandler = () => {
+    this.setState({showPeople: !this.state.showPeople})
   }
 
-  removeClickHandler = (index) => {
-    const word = this.state.word;
-    const newWord = word.split('').filter((c, i) => i !== index).join('')
+  closePersonHandler = (id) => {
+    const filteredPeople = this.state.people.filter(person => person.id !== id);
+    this.setState({people: filteredPeople})
+  }
 
-    this.setState({ word: newWord })
+  inputHandler = (e, id) => {
+    const pIndex = this.state.people.findIndex(p => p.id === id);
+    const personCopy = {...this.state.people[pIndex], name: e.target.value};
+    const peopleCopy = [...this.state.people];
+
+    peopleCopy[pIndex] = personCopy;
+
+    this.setState({people: peopleCopy})
   }
 
   render() {
+    const buttonStyle = {
+      background: this.state.showPeople ? '#c9c9f1' : 'lightblue',
+      boxShadow: this.state.showPeople ? 'inset 3px 3px 2px gray' : 'none',
+      fontWeight: 'bold',
+      padding: '10px 5px',
+      border: '1px solid black',
+      cursor: 'pointer'
+    }
+
+    const personsHtml = this.state.showPeople
+        ? (<React.Fragment>
+          {this.state.people.map((person, index) => {
+            return (
+                <Person name={person.name}
+                        age={person.age}
+                        key={person.id}
+                        closeClickHandler={() => {
+                          this.closePersonHandler(person.id)
+                        }}
+                        inputHandler={(event) => {
+                          this.inputHandler(event, person.id)
+                        }}
+                >
+                  {person.hobby ? person.hobby : null}
+                </Person>
+            )
+          })}
+        </React.Fragment>)
+        : ''
+
     return (
-      <div className="App">
-        <ol>
-          <li>Create an input field (in App component) with a change listener which outputs the length of the entered text below it (e.g. in a paragraph).</li>
-          <li>Create a new component (=> ValidationComponent) which receives the text length as a prop</li>
-          <li>Inside the ValidationComponent, either output "Text too short" or "Text long enough" depending on the text length (e.g. take 5 as a minimum length)</li>
-          <li>Create another component (=> CharComponent) and style it as an inline box (=> display: inline-block, padding: 16px, text-align: center, margin: 16px, border: 1px solid black).</li>
-          <li>Render a list of CharComponents where each CharComponent receives a different letter of the entered text (in the initial input field) as a prop.</li>
-          <li>When you click a CharComponent, it should be removed from the entered text.</li>
-        </ol>
-        <p>Hint: Keep in mind that JavaScript strings are basically arrays!</p>
-
-        <div className="App-Content">
-          <div className="App-Control">
-            <input type="text" onChange={this.inputChangeHandler} value={this.state.word}/>
-            <span>
-              { this.state.word.length ? this.state.word.length : 0}
-            </span>
-          </div>
-          <ValidationComponent word={this.state.word}/>
-
-          <hr/>
-
-          { this.state.word.split('').map( (c, i) => {
-              return <CharComponent character={c} key={i} removeClick={() => {this.removeClickHandler(i)}}/>
-            })
-          }
+        <div className="App">
+          <h1>Hello React World</h1>
+          <button style={buttonStyle} onClick={this.togglePeopleHandler}>Toggle People</button>
+          {personsHtml}
         </div>
-      </div>
-    );
+    )
   }
 }
 
 export default App;
+
+/*
+ * Since everything is JS you can dynamically style using JS
+ */
