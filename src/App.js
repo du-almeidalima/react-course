@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Person from "./Person/Person";
+import Radium from "radium";
 
 class App extends Component {
 
@@ -33,6 +34,14 @@ class App extends Component {
   }
 
   render() {
+    // Radium CSS
+    const btnStyle = {
+      transition: '150ms all',
+      ':hover': {
+        backgroundColor: '#fce38a'
+      }
+    }
+
     const personsHtml = this.state.showPeople
         ? (<React.Fragment>
           {this.state.people.map((person, index) => {
@@ -58,6 +67,7 @@ class App extends Component {
         <div className="App">
           <h1>Hello React World</h1>
           <button className={this.state.showPeople ? 'normal-btn' : 'pressed-btn'}
+                  style={btnStyle}
                   onClick={this.togglePeopleHandler}
           >
             Toggle People
@@ -68,8 +78,9 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);
 
 /*
- * Since everything is JS you can dynamically style using JS
+ * Radium wraps our component, and kind injects code into it. This let us write more complex 'JavaScript CSS' with
+ * pseudo selectors and media queries for example.
  */
