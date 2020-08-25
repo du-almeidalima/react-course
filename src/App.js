@@ -33,15 +33,6 @@ class App extends Component {
   }
 
   render() {
-    const buttonStyle = {
-      background: this.state.showPeople ? '#c9c9f1' : 'lightblue',
-      boxShadow: this.state.showPeople ? 'inset 3px 3px 2px gray' : 'none',
-      fontWeight: 'bold',
-      padding: '10px 5px',
-      border: '1px solid black',
-      cursor: 'pointer'
-    }
-
     const personsHtml = this.state.showPeople
         ? (<React.Fragment>
           {this.state.people.map((person, index) => {
@@ -66,7 +57,11 @@ class App extends Component {
     return (
         <div className="App">
           <h1>Hello React World</h1>
-          <button style={buttonStyle} onClick={this.togglePeopleHandler}>Toggle People</button>
+          <button className={this.state.showPeople ? 'normal-btn' : 'pressed-btn'}
+                  onClick={this.togglePeopleHandler}
+          >
+            Toggle People
+          </button>
           {personsHtml}
         </div>
     )

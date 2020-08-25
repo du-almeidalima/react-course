@@ -5,4 +5,18 @@
 button {
     display: block;
     margin: 0 auto;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 5px;
+    border: 1px solid black;
+}
+
+.normal-btn {
+    background: #8afca0;
+    box-shadow: inset 3px 3px 1px rgba(59, 59, 59, 0.78);
+}
+
+.pressed-btn {
+    background: lightblue;
+    box-shadow: initial;
 }
