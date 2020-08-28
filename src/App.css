@@ -3,14 +3,14 @@
     padding: 30px;
 }
 
-button {
-    display: block;
-    margin: 0 auto;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 10px 5px;
-    border: 1px solid black;
-}
+/*button {*/
+/*    display: block;*/
+/*    margin: 0 auto;*/
+/*    cursor: pointer;*/
+/*    font-weight: bold;*/
+/*    padding: 10px 5px;*/
+/*    border: 1px solid black;*/
+/*}*/
 
 .normal-btn {
     background: #8afca0;

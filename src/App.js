@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
 import './App.css';
 import Person from "./Person/Person";
-import Radium, {StyleRoot} from "radium";
 
 class App extends Component {
 
@@ -34,13 +34,19 @@ class App extends Component {
   }
 
   render() {
-    // Radium CSS
-    const btnStyle = {
-      transition: '150ms all',
-      ':hover': {
-        backgroundColor: '#fce38a'
+    const StyledButton = styled.button`
+      display: block;
+      margin: 0 auto;
+      cursor: pointer;
+      font-weight: bold;
+      padding: 10px 5px;
+      border: 1px solid black;
+      background-color: ${props => props.isToggled ? '#8afca0;' : 'lightblue;'}
+      
+      &:hover {
+        background-color: aqua;
       }
-    }
+    `;
 
     const personsHtml = this.state.showPeople
         ? (<React.Fragment>
@@ -64,25 +70,19 @@ class App extends Component {
         : ''
 
     return (
-        <StyleRoot>
-          <div className="App">
-            <h1>Hello React World</h1>
-            <button className={this.state.showPeople ? 'normal-btn' : 'pressed-btn'}
-                    style={btnStyle}
-                    onClick={this.togglePeopleHandler}
-            >
-              Toggle People
-            </button>
-            {personsHtml}
-          </div>
-        </StyleRoot>
+        <div className="App">
+          <h1>Hello React World</h1>
+          <StyledButton onClick={this.togglePeopleHandler} isToggled={this.state.showPeople}>
+            Toggle People
+          </StyledButton>
+          {personsHtml}
+        </div>
     )
   }
 }
 
-export default Radium(App);
+export default App;
 
 /*
- * Radium wraps our component, and kind injects code into it. This let us write more complex 'JavaScript CSS' with
- * pseudo selectors and media queries for example.
+ * Styled Component's Component accept all normal HTML props and events
  */
