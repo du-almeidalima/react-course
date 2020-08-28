@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
-import './App.css';
+import appStyle from './App.css';
 import Person from "./Person/Person";
 
 class App extends Component {
@@ -34,20 +33,6 @@ class App extends Component {
   }
 
   render() {
-    const StyledButton = styled.button`
-      display: block;
-      margin: 0 auto;
-      cursor: pointer;
-      font-weight: bold;
-      padding: 10px 5px;
-      border: 1px solid black;
-      background-color: ${props => props.isToggled ? '#8afca0;' : 'lightblue;'}
-      
-      &:hover {
-        background-color: aqua;
-      }
-    `;
-
     const personsHtml = this.state.showPeople
         ? (<React.Fragment>
           {this.state.people.map((person, index) => {
@@ -70,11 +55,11 @@ class App extends Component {
         : ''
 
     return (
-        <div className="App">
+        <div className={appStyle.App}>
           <h1>Hello React World</h1>
-          <StyledButton onClick={this.togglePeopleHandler} isToggled={this.state.showPeople}>
+          <button className={`${appStyle.Btn} ${this.state.showPeople ? appStyle.Pressed : appStyle.Normal}`} onClick={this.togglePeopleHandler}>
             Toggle People
-          </StyledButton>
+          </button>
           {personsHtml}
         </div>
     )
@@ -84,5 +69,18 @@ class App extends Component {
 export default App;
 
 /*
- * Styled Component's Component accept all normal HTML props and events
+ * To use CSS Modules I ran "npm run eject", and then added to webpack.config.*.js
+ * 
+* use: [
+    require.resolve('style-loader'),
+    {
+      loader: require.resolve('css-loader'),
+      options: {
+        importLoaders: 1,
+        modules: true,
+        localIdentName: '[name]__[local]__[hash:base64:5]'
+      },
+    },
+    ...
+  ]
  */
