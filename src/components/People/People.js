@@ -22,6 +22,10 @@ class People extends Component{
     console.log('[People] >> componentDidUpdate');
   }
 
+  componentWillUnmount() {
+    console.log('[People] >> componentWillUnmount');
+  }
+
   render() {
     return this.props.people.map((person) => {
       console.log('[People] >> render');

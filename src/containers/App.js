@@ -23,6 +23,7 @@ class App extends Component {
       { id: 3, name: "Juaum", age: 18 },
     ],
     showPeople: false,
+    showCockpit: true
   };
 
   // Lifecycle Hooks
@@ -69,10 +70,10 @@ class App extends Component {
     console.log('[App] >> render');
     return (
       <div className={appStyle.App}>
-        <Cockpit
-          showPeople={this.state.showPeople}
-          togglePeopleHandler={this.togglePeopleHandler}
-        />
+        <button onClick={() => { this.setState({ showCockpit: false })}}>Remove Cockpit</button>
+
+        { this.state.showCockpit ? <Cockpit showPeople={this.state.showPeople} togglePeopleHandler={this.togglePeopleHandler} /> : null }
+
         {this.state.showPeople ? (
           <People
             people={this.state.people}

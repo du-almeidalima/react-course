@@ -5,21 +5,21 @@ const cockpit = (props) => {
 
   // Triggers when props.showPeople change
   useEffect(() => {
-    console.log('[Cockpit] >> useEffect');
-
-    // Httprequest
-    setTimeout(() => {
-      alert('Some async work has been done!')
-    }, 1000);
-
+    console.log('[Cockpit] >> useEffect on showPeople');
   }, [props.showPeople])
 
   // Triggers only once, equivalent to componentDidMount
   useEffect(() => {
-    setTimeout(() => {
-      console.log('[Cockpit] >> useEffect as componentDidMount');
-    }, 1000);
-  }, [])
+    const timeoutId = setTimeout(() => {
+      alert('[Cockpit] >> useEffect as componentDidMount');
+    }, 4000);
+
+    // Returning a function will act as the componentDidUnmount
+    return () => { 
+      clearTimeout(timeoutId);
+      console.log('[Cockpit] >> useEffect as componentDidUnmount');
+    }
+  }, []);
 
   return (
     <React.Fragment>
