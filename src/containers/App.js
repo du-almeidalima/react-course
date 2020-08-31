@@ -4,6 +4,13 @@ import People from "../components/People/People";
 import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
+  // Injected by React
+  constructor(props) {
+    super(props);
+
+    console.log('[App] >> constructor');
+  }
+
   state = {
     people: [
       { id: 1, name: "Eduardo", age: 23 },
@@ -17,6 +24,25 @@ class App extends Component {
     ],
     showPeople: false,
   };
+
+  // Lifecycle Hooks
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App] >> getDerivedStateFromProps', props, state);
+    return state;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App] >> shouldComponentUpdate', nextProps, nextState);
+    return true;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('[App] >> componentDidUpdate', prevProps, prevProps);
+  }
+
+  componentDidMount() {
+    console.log('[App] >> componentDidMount');
+  }
 
   togglePeopleHandler = () => {
     this.setState({ showPeople: !this.state.showPeople });
@@ -40,6 +66,7 @@ class App extends Component {
   };
 
   render() {
+    console.log('[App] >> render');
     return (
       <div className={appStyle.App}>
         <Cockpit

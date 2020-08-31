@@ -1,15 +1,25 @@
-import React from 'react';
-import personStyles from './Person.css';
+import React, { Component } from "react";
+import personStyles from "./Person.css";
 
-const person = (props) => {
-  return (
+class Person extends Component {
+  render() {
+    return (
       <div className={personStyles.Person}>
-        <span className={personStyles.Close} onClick={props.closeClickHandler}>&times;</span>
-        <h3>Hey! I'm {props.name} and I have {props.age} years old!</h3>
-        <p>{props.children}</p>
-        <input type="text" onChange={e => props.inputHandler(e)} value={props.name}/>
+        <span className={personStyles.Close} onClick={this.props.closeClickHandler}>
+          &times;
+        </span>
+        <h3>
+          Hey! I'm {this.props.name} and I have {this.props.age} years old!
+        </h3>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={(e) => this.props.inputHandler(e)}
+          value={this.props.name}
+        />
       </div>
-  )
-};
+    );
+  }
+}
 
-export default person;
+export default Person;
