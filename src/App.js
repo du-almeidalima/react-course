@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import appStyle from './App.css';
 import Person from "./Person/Person";
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
 
@@ -37,6 +38,7 @@ class App extends Component {
         ? (<React.Fragment>
           {this.state.people.map((person, index) => {
             return (
+              <ErrorBoundary>
                 <Person name={person.name}
                         age={person.age}
                         key={person.id}
@@ -49,6 +51,7 @@ class App extends Component {
                 >
                   {person.hobby ? person.hobby : null}
                 </Person>
+              </ErrorBoundary>
             )
           })}
         </React.Fragment>)
@@ -67,20 +70,3 @@ class App extends Component {
 }
 
 export default App;
-
-/*
- * To use CSS Modules I ran "npm run eject", and then added to webpack.config.*.js
- * 
-* use: [
-    require.resolve('style-loader'),
-    {
-      loader: require.resolve('css-loader'),
-      options: {
-        importLoaders: 1,
-        modules: true,
-        localIdentName: '[name]__[local]__[hash:base64:5]'
-      },
-    },
-    ...
-  ]
- */
