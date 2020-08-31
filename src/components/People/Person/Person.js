@@ -2,11 +2,6 @@ import React from 'react';
 import personStyles from './Person.css';
 
 const person = (props) => {
-  const shouldFail = Math.random() > 0.7;
-  if (shouldFail) {
-    throw new Error('WARNING WARNING FAIL DANGER HAZARD');
-  }
-
   return (
       <div className={personStyles.Person}>
         <span className={personStyles.Close} onClick={props.closeClickHandler}>&times;</span>
