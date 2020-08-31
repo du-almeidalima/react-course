@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Person from "./Person/Person";
 
-class People extends Component{ 
+class People extends PureComponent{ 
 
   static getDerivedStateFromProps(props, state) {
     console.log('[People] >> getDerivedStateFromProps');
     return state;
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    const shouldUpdate = this.props.people !== nextProps.people;
-    console.log('[People] >> shouldComponentUpdate', shouldUpdate);
-    return shouldUpdate;
-  }
+  // shouldComponentUpdate(nextProps, nextState, nextContext) {
+  //   const shouldUpdate = this.props.people !== nextProps.people;
+  //   console.log('[People] >> shouldComponentUpdate', shouldUpdate);
+  //   return shouldUpdate;
+  // }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[People] >> getSnapshotBeforeUpdate');
@@ -50,3 +50,9 @@ class People extends Component{
 }
 
 export default People;
+
+/**
+ * If we want to create a class based component that implements the 'shouldComponentUpdate' checking all of its
+ * props for change, we could extend the PureComponent class. This class is the same as Component but it already implement such kind
+ * of checking.
+ */
