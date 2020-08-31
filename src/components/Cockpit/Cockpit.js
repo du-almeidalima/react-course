@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import cockpitStyle from './Cockpit.css';
 
 const cockpit = (props) => {
+  // Triggers on every change
+  useEffect(() => {
+    console.log('[Cockpit] >> useEffect');
+  });
 
   // Triggers when props.showPeople change
   useEffect(() => {
@@ -36,11 +40,14 @@ const cockpit = (props) => {
   );
 };
 
-export default cockpit;
+export default React.memo(cockpit);
 
 /**
  * useEffect is kind of a all in one lifecycle hook, it executes on component creation, update and so on...
  * But we can tweak it, of example we can set this function to only execute when a certain value/object change.
  * 
  * And we can set it / call it more than once
+ * 
+ * React.memo is useful for optimizing the code, when wrapping the component on this function, React will keep track of the
+ * input/props changes and decide if there's need to re-render this component.
  */
