@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import personStyles from "./Person.css";
+import withClass from "../../../hoc/WithClass";
 
 class Person extends Component {
   render() {
     return (
-      <div className={personStyles.Person}>
+      <React.Fragment>
         <span className={personStyles.Close} onClick={this.props.closeClickHandler}>
           &times;
         </span>
@@ -17,9 +18,9 @@ class Person extends Component {
           onChange={(e) => this.props.inputHandler(e)}
           value={this.props.name}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default Person;
+export default withClass(Person, personStyles.Person);

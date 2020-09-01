@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import appStyle from "./App.css";
 import People from "../components/People/People";
 import Cockpit from "../components/Cockpit/Cockpit";
+import withClass from "../hoc/WithClass";
 
 class App extends Component {
   // Injected by React
@@ -69,7 +70,7 @@ class App extends Component {
   render() {
     console.log('[App] >> render');
     return (
-      <div className={appStyle.App}>
+      <React.Fragment>
         <button onClick={() => { this.setState({ showCockpit: false })}}>Remove Cockpit</button>
 
         { this.state.showCockpit ? <Cockpit showPeople={this.state.showPeople} togglePeopleHandler={this.togglePeopleHandler} /> : null }
@@ -81,9 +82,9 @@ class App extends Component {
             inputHandler={this.inputHandler}
           />
         ) : null}
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default App;
+export default withClass(App, appStyle.App);
