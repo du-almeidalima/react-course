@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import PropTypes from 'prop-types';
 import Person from "./Person/Person";
 
 class People extends PureComponent{ 
@@ -49,10 +50,24 @@ class People extends PureComponent{
   }
 }
 
+/**
+ * Defining the PropTypes or the TypeChecking of the Component
+ */
+Person.propTypes = {
+  closePersonHandler: PropTypes.func,
+  inputHandler: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number
+};
+
 export default People;
 
 /**
  * If we want to create a class based component that implements the 'shouldComponentUpdate' checking all of its
  * props for change, we could extend the PureComponent class. This class is the same as Component but it already implement such kind
  * of checking.
+ */
+
+/**
+ * Prop Types: npm install --save prop-types
  */
