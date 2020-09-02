@@ -24,7 +24,8 @@ class App extends Component {
       { id: 3, name: "Juaum", age: 18 },
     ],
     showPeople: false,
-    showCockpit: true
+    showCockpit: true,
+    counter: 0
   };
 
   // Lifecycle Hooks
@@ -64,7 +65,13 @@ class App extends Component {
 
     peopleCopy[pIndex] = personCopy;
 
-    this.setState({ people: peopleCopy });
+    /* Ensuring the 'state' value */
+    this.setState((prevState, props) => {
+      return {
+        people: peopleCopy,
+        counter: prevState.counter + 1
+      }
+    });
   };
 
   render() {
@@ -88,3 +95,11 @@ class App extends Component {
 }
 
 export default withClass(App, appStyle.App);
+
+/**
+ * When you need to update the state with the previous value of the state with 'setState' you need to pass a function
+ * to the 'setState' function that will receive 'previousState' and 'props'. This is needed because setState is not
+ * actually a sync op. React will try to determine the best time to re-render the component, and when this occurs,
+ * even though setState was called a while, if you use a object as the setState parameter, it will take the current
+ * state object, and this may be incorrect.
+ */
