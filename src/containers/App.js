@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import appStyle from "./App.css";
 import People from "../components/People/People";
 import Cockpit from "../components/Cockpit/Cockpit";
 import withClass from "../hoc/WithClass";
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   // Injected by React
@@ -14,18 +15,19 @@ class App extends Component {
 
   state = {
     people: [
-      { id: 1, name: "Eduardo", age: 23 },
+      {id: 1, name: "Eduardo", age: 23},
       {
         id: 2,
         name: "Jolie",
         age: 25,
         hobby: "I really like watching Netflix",
       },
-      { id: 3, name: "Juaum", age: 18 },
+      {id: 3, name: "Juaum", age: 18},
     ],
     showPeople: false,
     showCockpit: true,
-    counter: 0
+    counter: 0,
+    authenticated: false
   };
 
   // Lifecycle Hooks
@@ -48,19 +50,19 @@ class App extends Component {
   }
 
   togglePeopleHandler = () => {
-    this.setState({ showPeople: !this.state.showPeople });
+    this.setState({showPeople: !this.state.showPeople});
   };
 
   closePersonHandler = (id) => {
     const filteredPeople = this.state.people.filter(
-      (person) => person.id !== id
+        (person) => person.id !== id
     );
-    this.setState({ people: filteredPeople });
+    this.setState({people: filteredPeople});
   };
 
   inputHandler = (e, id) => {
     const pIndex = this.state.people.findIndex((p) => p.id === id);
-    const personCopy = { ...this.state.people[pIndex], name: e.target.value };
+    const personCopy = {...this.state.people[pIndex], name: e.target.value};
     const peopleCopy = [...this.state.people];
 
     peopleCopy[pIndex] = personCopy;
@@ -74,22 +76,33 @@ class App extends Component {
     });
   };
 
+  loginHandler = () => {
+    this.state.authenticated = true;
+  }
+
   render() {
     console.log('[App] >> render');
     return (
-      <React.Fragment>
-        <button onClick={() => { this.setState({ showCockpit: false })}}>Remove Cockpit</button>
+        <React.Fragment>
+          <button onClick={() => {
+            this.setState({showCockpit: false})
+          }}>Remove Cockpit
+          </button>
+          <AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.loginHandler}}>
+            {this.state.showCockpit ?
+                <Cockpit showPeople={this.state.showPeople} togglePeopleHandler={this.togglePeopleHandler}/>
+                : null
+            }
 
-        { this.state.showCockpit ? <Cockpit showPeople={this.state.showPeople} togglePeopleHandler={this.togglePeopleHandler} /> : null }
-
-        {this.state.showPeople ? (
-          <People
-            people={this.state.people}
-            closePersonHandler={this.closePersonHandler}
-            inputHandler={this.inputHandler}
-          />
-        ) : null}
-      </React.Fragment>
+            {this.state.showPeople ? (
+                <People
+                    people={this.state.people}
+                    closePersonHandler={this.closePersonHandler}
+                    inputHandler={this.inputHandler}
+                />
+            ) : null}
+          </AuthContext.Provider>
+        </React.Fragment>
     );
   }
 }
@@ -102,4 +115,9 @@ export default withClass(App, appStyle.App);
  * actually a sync op. React will try to determine the best time to re-render the component, and when this occurs,
  * even though setState was called a while, if you use a object as the setState parameter, it will take the current
  * state object, and this may be incorrect.
+ */
+
+/**
+ * The Context.Provider is the place where we want to share the state and in the children components we can use the
+ * Context.Consumer regardless of its depth level
  */
