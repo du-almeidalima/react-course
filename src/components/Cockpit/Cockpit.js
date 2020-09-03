@@ -1,9 +1,10 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useContext} from "react";
 import cockpitStyle from './Cockpit.css';
 import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
   const bntRef = useRef(null);
+  const authContext = useContext(AuthContext);
 
   // Triggers on every change
   useEffect(() => {
@@ -41,12 +42,7 @@ const cockpit = (props) => {
       >
         Toggle People
       </button>
-
-      <AuthContext.Consumer>
-        {(context) => (
-            <button onClick={() => {context.login()}} className={cockpitStyle.Btn}>Authenticate</button>
-        )}
-      </AuthContext.Consumer>
+      <button onClick={authContext.login} className={cockpitStyle.Btn}>Log In</button>
     </React.Fragment>
   );
 };
@@ -66,4 +62,18 @@ export default React.memo(cockpit);
 /**
  * Since functional components don't have a constructor, we can't use React.createRef, but we can use a hook for this
  * the useRef(). Remember that this is set up by React after the render.
+ */
+
+/*
+ * Using JSX Context to trigger a reference function
+ *    <AuthContext.Consumer>
+ *      {(context) => (
+ *          <button onClick={() => {context.login()}} className={cockpitStyle.Btn}>Authenticate</button>
+ *      )}
+ *    </AuthContext.Consumer>
+ *
+ * Similar to Person, we have a better way, since Cockpit is a functional component, we can't use the:
+ * 'static contextType = ...'
+ * But we can use a React Hook useContext, this will take the Context we want and will return this reference so we can
+ * use it
  */

@@ -68,7 +68,7 @@ class App extends Component {
     peopleCopy[pIndex] = personCopy;
 
     /* Ensuring the 'state' value */
-    this.setState((prevState, props) => {
+    this.setState((prevState) => {
       return {
         people: peopleCopy,
         counter: prevState.counter + 1
@@ -77,7 +77,8 @@ class App extends Component {
   };
 
   loginHandler = () => {
-    this.state.authenticated = true;
+    console.log('click')
+    this.setState({ authenticated: true })
   }
 
   render() {

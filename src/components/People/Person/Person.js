@@ -4,6 +4,8 @@ import withClass from "../../../hoc/WithClass";
 import AuthContext from '../../../context/auth-context'
 
 class Person extends Component {
+  static contextType = AuthContext;
+
   constructor(props) {
     super(props);
 
@@ -13,16 +15,13 @@ class Person extends Component {
   componentDidMount() {
     // this.inputRef.focus();
     this.inputRef.current.focus();
+    console.log('[Person] context', this.context);
   }
 
   render() {
     return (
       <React.Fragment>
-        <AuthContext.Consumer>
-          {(context) => (
-            context.authenticated ? <span>I'm Authenticated</span> : <span>Not Authenticated</span>
-          )}
-        </AuthContext.Consumer>
+        { this.context.authenticated ? <span>I'm Authenticated</span> : <span>Not Authenticated</span> }
         <span className={personStyles.Close} onClick={this.props.closeClickHandler}>
           &times;
         </span>
@@ -43,3 +42,22 @@ class Person extends Component {
 }
 
 export default withClass(Person, personStyles.Person);
+
+/*
+ * To use the Context API as a Consumer we can do the following in the JSX.
+ *
+ *  <AuthContext.Consumer>
+ *    {(context) => (
+ *      context.authenticated ? <span>I'm Authenticated</span> : <span>Not Authenticated</span>
+ *    )}
+ *  </AuthContext.Consumer>
+ *
+ * The Context.Consumer receives not a children
+ * but a function with a 'context' parameter that React will inject, and in this way we can use the state.
+ */
+
+/*
+ * Alternatively we can also use another syntax te reach the context, the ' static contextType = AuthContext; '
+ * With this, react will kinda inject/create the context into a property 'context' in the current class. So the context
+ * can be accessed with just 'this.context'
+ */
