@@ -11,7 +11,7 @@ const layout = (props) => (
       </ul>
     </header>
 
-    <main>{props.children}</main>
+    <main className={layoutStyle.LayoutContainer}>{props.children}</main>
   </React.Fragment>
 );
 

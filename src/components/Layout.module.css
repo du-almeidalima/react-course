@@ -7,3 +7,8 @@
   display: inline-block;
   padding: var(--padding);
 }
+
+.LayoutContainer {
+  height: 100%;
+  padding: calc(var(--padding) * 2);
+}
