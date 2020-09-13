@@ -8,7 +8,7 @@ const burgerIngredient = props => {
 
 const createIngredientTemplate = ingredientType => {
   switch (ingredientType) {
-    case 'brad-bottom':
+    case 'bread-bottom':
       return <div className={burgerIngredientStyle.BreadBottom} />
     case 'meat':
       return <div className={burgerIngredientStyle.Meat} />
@@ -16,7 +16,7 @@ const createIngredientTemplate = ingredientType => {
       return <div className={burgerIngredientStyle.Cheese} />
     case 'bacon':
       return <div className={burgerIngredientStyle.Cheese} />
-    case 'brad-top':
+    case 'bread-top':
       return (
           <div className={burgerIngredientStyle.BreadTop}>
             <div className={burgerIngredientStyle.Seeds1} />
