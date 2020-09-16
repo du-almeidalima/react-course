@@ -22,7 +22,6 @@ const burger = props => {
   const ingredientsArr = Object.entries(props.ingredients)
   const ingredients = createIngredientsTemplate(ingredientsArr);
 
-  console.log(ingredients)
   return (
       <div className={burgerStyle.Burger}>
         <BurgerIngredient type="bread-top" key='bread-top'/>

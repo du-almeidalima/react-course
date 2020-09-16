@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import BuildControlsStyle from './BuildControls.module.css';
 import BuildControl from './BuildControl/BuildControl';
 
-const buildControl = props => {
+const buildControls = props => {
   const controls = [
     { label: 'Salad', type: 'salad' },
     { label: 'Bacon', type: 'bacon' },
@@ -12,13 +11,17 @@ const buildControl = props => {
   ]
   return (
     <div className={BuildControlsStyle.BuildControlsWrapper}>
-      { controls.map(c => <BuildControl key={c.type} label={c.label} />) }
+      { controls.map(c => (
+        <BuildControl
+          key={c.type}
+          label={c.label}
+          added={() => { props.ingredientAdded(c.type) }}
+          removed={() => { props.ingredientRemoved(c.type) }}
+          disabled={props.disabledInfo[c.type]}
+        />
+      )) }
     </div>
   )
 }
 
-buildControl.propType = {
-  label: PropTypes.string.isRequired
-}
-
-export default buildControl;
+export default buildControls;
