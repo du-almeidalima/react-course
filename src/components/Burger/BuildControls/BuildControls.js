@@ -11,15 +11,20 @@ const buildControls = props => {
   ]
   return (
     <div className={BuildControlsStyle.BuildControlsWrapper}>
-      { controls.map(c => (
-        <BuildControl
-          key={c.type}
-          label={c.label}
-          added={() => { props.ingredientAdded(c.type) }}
-          removed={() => { props.ingredientRemoved(c.type) }}
-          disabled={props.disabledInfo[c.type]}
-        />
-      )) }
+      <span className={BuildControlsStyle.BuildControlsTotalPrice}>
+        Total: {props.totalPrice.toFixed(2)}$
+      </span>
+      <div className={BuildControlsStyle.BuildControlsContainer}>
+        { controls.map(c => (
+          <BuildControl
+            key={c.type}
+            label={c.label}
+            added={() => { props.ingredientAdded(c.type) }}
+            removed={() => { props.ingredientRemoved(c.type) }}
+            disabled={props.disabledInfo[c.type]}
+          />
+        )) }
+      </div>
     </div>
   )
 }
