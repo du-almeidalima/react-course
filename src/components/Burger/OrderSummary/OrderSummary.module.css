@@ -1,0 +1,11 @@
+.IngredientName {
+    text-transform: capitalize;
+}
+
+.IngredientsList {
+    font-size: 0.9rem;
+    margin-top: calc(var(--padding) * 3);
+    margin-left: calc(var(--padding) * 5);
+    margin-bottom: calc(var(--padding) * 3);
+    list-style-position: inside;
+}

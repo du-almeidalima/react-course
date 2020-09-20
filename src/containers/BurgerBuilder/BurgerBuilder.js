@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
 const INGREDIENTS_PRICE = new Map([
   ["salad", 0.5],
@@ -18,7 +20,8 @@ export default class BurgerBuilder extends Component {
       meat: 0,
     },
     totalPrice: 4,
-    purchasable: false
+    purchasable: false,
+    showPurchaseModal: false
   };
 
   addIngredientHandler = (ingredientType) => {
@@ -57,12 +60,16 @@ export default class BurgerBuilder extends Component {
     });
   };
 
-  updatePurchasableState(ingredients) {
+  updatePurchasableState = ingredients => {
     const purchasable = Object.values(ingredients).some(i => i > 0);
     this.setState({
       ...this.state,
       purchasable
     })
+  }
+
+  purchaseModalHandler = () => {
+    this.setState({ showPurchaseModal: true });
   }
 
   render() {
@@ -76,6 +83,9 @@ export default class BurgerBuilder extends Component {
 
     return (
       <Fragment>
+        <Modal show={this.state.showPurchaseModal}>
+          <OrderSummary ingredients={this.state.ingredients}/>
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
@@ -83,6 +93,7 @@ export default class BurgerBuilder extends Component {
           disabledInfo={removeBtnDisabledIngredients}
           totalPrice={this.state.totalPrice}
           canPurchase={this.state.purchasable}
+          openPurchaseModal={this.purchaseModalHandler}
         />
       </Fragment>
     );

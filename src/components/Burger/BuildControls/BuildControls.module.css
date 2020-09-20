@@ -70,3 +70,9 @@
       transform: scale(1);
   }
 }
+
+@media (min-width: 768px) {
+  .BuildControlsWrapper  {
+    bottom: calc(5 * var(--padding));
+  }
+}

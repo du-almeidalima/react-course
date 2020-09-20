@@ -17,6 +17,7 @@ const buildControls = (props) => {
       <button 
         className={BuildControlsStyle.OrderBtn} 
         disabled={!props.canPurchase}
+        onClick={props.openPurchaseModal}
       >
         Order Now!
       </button>
