@@ -23,7 +23,8 @@ const button = props => {
     const buttonProps = {
         fillStyle: props.fillStyle,
         type: props.type,
-        children: props.children
+        children: props.children,
+        styles: props.styles
     }
 
     const btnFillStyle = buttonProps.fillStyle ? buttonProps.fillStyle : null;
@@ -31,7 +32,7 @@ const button = props => {
     const nativeButtonHtmlProps = extractCustomProps(props, buttonProps);
 
     return (
-        <button {...nativeButtonHtmlProps} className={classes}>
+        <button {...nativeButtonHtmlProps} className={classes} style={{...buttonProps.styles}}>
             {props.children}
         </button>
     )

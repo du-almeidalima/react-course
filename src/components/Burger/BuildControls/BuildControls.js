@@ -15,7 +15,7 @@ const buildControls = (props) => {
         Total: {props.totalPrice.toFixed(2)}$
       </span>
       <button 
-        className={BuildControlsStyle.OrderBtn} 
+        className={BuildControlsStyle.OrderBtn}
         disabled={!props.canPurchase}
         onClick={props.openPurchaseModal}
       >

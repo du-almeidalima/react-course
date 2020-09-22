@@ -9,8 +9,10 @@ const createIngredientsLITemplate = ingredientsEntries => {
         const amount = ie[1];
 
         return (
-            <li key={key}>
-                <b className={OrderSummaryStyle.IngredientName}>{key}</b>: {amount}
+            <li key={key} className={OrderSummaryStyle.IngredientsListItem}>
+                <b className={OrderSummaryStyle.IngredientName}>{key}</b>
+                <hr className={OrderSummaryStyle.IngredientsListItemSeparator}/>
+                <b>{amount}</b>
             </li>
         )
     });
@@ -20,13 +22,18 @@ const orderSummary = props => {
     const ingredientsEntries = Object.entries(props.ingredients);
     return (
         <Fragment>
-            <h3>Order Summary</h3>
+            <h2>Order Summary</h2>
             <ul className={OrderSummaryStyle.IngredientsList}>
                 { createIngredientsLITemplate(ingredientsEntries) }
             </ul>
-            <p>Continue to Checkout?</p>
+            <hr className={OrderSummaryStyle.Separator}/>
+            <div className={OrderSummaryStyle.TotalWrapper}>
+                <span>TOTAL</span>
+                <hr className={OrderSummaryStyle.IngredientsListItemSeparator}/>
+                <span>{props.totalPrice.toFixed(2)}$</span>
+            </div>
             <div className={OrderSummaryStyle.ActionWrapper}>
-                <Button type="Danger" fillStyle="Outline" onClick={props.cancelled}>Cancel</Button>
+                <Button type="Danger" fillStyle="Outline" onClick={props.cancelled} styles={{marginRight: '10px'}}>Cancel</Button>
                 <Button type="Success" fillStyle="Full" onClick={props.confirmed}>Continue</Button>
             </div>
         </Fragment>
@@ -34,7 +41,10 @@ const orderSummary = props => {
 }
 
 orderSummary.propTypes = {
-    ingredients: PropTypes.object.isRequired
+    ingredients: PropTypes.object.isRequired,
+    totalPrice: PropTypes.number.isRequired,
+    cancelled: PropTypes.func.isRequired,
+    confirmed: PropTypes.func.isRequired
 }
 
 export default orderSummary;

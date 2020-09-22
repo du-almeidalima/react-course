@@ -6,7 +6,6 @@
     cursor: pointer;
     font: inherit;
     padding: 10px;
-    margin: 10px;
     font-weight: bold;
     border-radius: var(--border-radius);
     transition: 150ms all ease-in-out;
