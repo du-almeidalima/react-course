@@ -4,6 +4,8 @@
   --small-width: 576px;
   --medium-width: 768px;
   --large-width: 992px;
+  --success: #5c9210;
+  --danger: #944317;
 }
 
 * {

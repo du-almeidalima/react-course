@@ -76,6 +76,10 @@ export default class BurgerBuilder extends Component {
     this.setState({ showPurchaseModal: false })
   }
 
+  confirmPurchaseModalHandler = () => {
+    alert('Confirmed!')
+  }
+
   render() {
     console.log('Called');
 
@@ -88,7 +92,11 @@ export default class BurgerBuilder extends Component {
     return (
       <Fragment>
         <Modal show={this.state.showPurchaseModal} modalClosed={this.closePurchaseModalHandler}>
-          <OrderSummary ingredients={this.state.ingredients}/>
+          <OrderSummary
+              ingredients={this.state.ingredients}
+              cancelled={this.closePurchaseModalHandler}
+              confirmed={this.confirmPurchaseModalHandler}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls

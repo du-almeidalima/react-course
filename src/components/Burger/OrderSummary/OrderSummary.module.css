@@ -9,3 +9,9 @@
     margin-bottom: calc(var(--padding) * 3);
     list-style-position: inside;
 }
+
+.ActionWrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--padding);
+}
