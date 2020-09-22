@@ -1,17 +1,13 @@
 import React from "react";
 import layoutStyle from "./Layout.module.css";
+import Toolbar from './Navigation/Toolbar/Toolbar';
 
 const layout = (props) => (
   <React.Fragment>
-    <header>
-      <ul className={layoutStyle.LayoutPagesList}>
-        <li className={layoutStyle.LayoutPagesItem}>Toolbar</li>
-        <li className={layoutStyle.LayoutPagesItem}>SideDrawer</li>
-        <li className={layoutStyle.LayoutPagesItem}>Backdrop</li>
-      </ul>
-    </header>
-
-    <main className={layoutStyle.LayoutContainer}>{props.children}</main>
+    <Toolbar />
+    <main className={layoutStyle.LayoutContainer}>
+      {props.children}
+    </main>
   </React.Fragment>
 );
 

@@ -1,0 +1,28 @@
+.NavigationItem {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.NavigationItem .Link {
+  color: white;
+  display: block;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: all 150ms linear;
+  padding: 0 calc(2 * var(--padding));
+  border-bottom: 4px solid transparent;
+  height: 100%;
+  line-height: 55px;
+}
+
+.NavigationItem .Active {
+  border-bottom: 4px solid var(--primary);
+}
+
+.NavigationItem .Link:hover,
+.NavigationItem .Link:active {
+  box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.15);
+  border-bottom: 4px solid var(--brown-300);
+}
