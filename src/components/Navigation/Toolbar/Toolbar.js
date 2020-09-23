@@ -6,9 +6,9 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 const toolbar = (props) => {
   return (
     <header className={ToolbarStyle.Toolbar}>
-      <div>MENU</div>
       <Logo classes={ToolbarStyle.Logo}/>
-      <nav className={ToolbarStyle.Nav}>
+      <button className={ToolbarStyle.SideDrawer} onClick={props.toggleSideDrawer}/>
+      <nav className={`${ToolbarStyle.Nav} ${ToolbarStyle.DesktopOnly}`}>
         <NavigationItems />
       </nav>
     </header>

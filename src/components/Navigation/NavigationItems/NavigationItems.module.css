@@ -1,8 +1,16 @@
 .NavigationItemsWrapper {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   display: flex;
+  flex-flow: column;
   align-items: center;
+  list-style: none;
+  margin-top: var(--padding);
+  padding: 0;
   height: 100%;
+}
+
+@media (min-width: 576px) {
+  .NavigationItemsWrapper {
+    flex-flow: row nowrap;
+    margin: 0;
+  }
 }
