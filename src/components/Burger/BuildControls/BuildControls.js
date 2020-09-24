@@ -12,15 +12,8 @@ const buildControls = (props) => {
   return (
     <div className={BuildControlsStyle.BuildControlsWrapper}>
       <span className={BuildControlsStyle.BuildControlsTotalPrice}>
-        Total: {props.totalPrice.toFixed(2)}$
+        Total: {props.totalPrice.toFixed(2)}<span className={BuildControlsStyle.BuildControlsTotalPriceIcon}>$</span>
       </span>
-      <button 
-        className={BuildControlsStyle.OrderBtn}
-        disabled={!props.canPurchase}
-        onClick={props.openPurchaseModal}
-      >
-        Order Now!
-      </button>
       <div className={BuildControlsStyle.BuildControlsContainer}>
         {controls.map((c) => (
           <BuildControl
@@ -32,6 +25,13 @@ const buildControls = (props) => {
           />
         ))}
       </div>
+      <button 
+        className={BuildControlsStyle.OrderBtn}
+        disabled={!props.canPurchase}
+        onClick={props.openPurchaseModal}
+      >
+        Order Now!
+      </button>
     </div>
   );
 };

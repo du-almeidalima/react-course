@@ -1,10 +1,11 @@
 .BuildControlsWrapper {
-  width: 100%;
   position: fixed;
-  box-sizing: border-box;
-  bottom: var(--padding);
   left: 0;
+  box-sizing: border-box;
+  background-color: var(--brown-100);
+  bottom: var(--padding);
   padding: var(--padding);
+  width: 100%;
 }
 
 .BuildControlsContainer {
@@ -14,22 +15,27 @@
 }
 
 .BuildControlsTotalPrice {
+  color: white;
   display: inline-block;
   position: relative;
   font-weight: bolder;
   font-size: 2rem;
   left: 50%;
-  margin-bottom: 30px;
+  margin: 15px 0;
   transform: translateX(-50%);
   padding: 5px 10px;
   border: 1px dashed goldenrod;
 }
 
+.BuildControlsTotalPrice > .BuildControlsTotalPriceIcon {
+  color: goldenrod;
+}
+
 
 .OrderBtn {
-  position: absolute;
-  right: calc(2 * var(--padding));
-  top: calc(3 * var(--padding));
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #DAD735;
   outline: none;
   cursor: pointer;
@@ -38,7 +44,9 @@
   color: #966909;
   font-family: inherit;
   font-size: 1.2em;
+  width: 50%;
   padding: calc(2 * var(--padding));
+  margin: var(--padding) 0;
   box-shadow: 2px 2px 2px #966909;
 }
 
@@ -71,8 +79,17 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .BuildControlsWrapper  {
     bottom: calc(5 * var(--padding));
+  }
+
+  .OrderBtn {
+    position: absolute;
+    right: calc(2 * var(--padding));
+    top: calc(3 * var(--padding));
+    left: unset;
+    transform: unset;
+    width: auto;
   }
 }

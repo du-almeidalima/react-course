@@ -81,8 +81,6 @@ export default class BurgerBuilder extends Component {
   }
 
   render() {
-    console.log('Called');
-
     const removeBtnDisabledIngredients = Object.keys(this.state.ingredients)
     .reduce((acc, curr) => {
       acc[curr] = this.state.ingredients[curr] <= 0;
