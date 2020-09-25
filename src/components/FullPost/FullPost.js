@@ -27,25 +27,53 @@ class FullPost extends Component {
         }
     }
 
+    addPostClickHandler = () => {
+        const post = {
+            title: this.state.title,
+            body: this.state.content,
+            author: this.state.author,
+        }
+
+        axios.post('https://jsonplaceholder.typicode.com/posts', post)
+            .then(res => {
+                console.log(res);
+            })
+    }
+
+    deletePostClickHandler = () => {
+        axios.delete(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+            .then(res => {
+                console.log(res);
+            })
+    }
+
     render () {
-        let post = <p>Please select a Post!</p>;
+        let post = (
+            <div className="FullPost">
+                <p>Please select a Post!</p>
+            </div>
+        );
 
         if (this.state.selectedPost && this.props.id === this.state.selectedPost.id) {
-            post = [
-                <h1>{this.state.selectedPost.title}</h1>,
-                <p>{this.state.selectedPost.content}</p>,
-                <div className="Edit">
-                    <button className="Delete">Delete</button>
+            post = (
+                <div className="FullPost">
+                    <h1>{this.state.selectedPost.title}</h1>
+                    <p>{this.state.selectedPost.content}</p>
+                    <div className="Edit">
+                        <button className="Delete" onClick={this.deletePostClickHandler}>Delete</button>
+                    </div>
                 </div>
-            ]
+            )
         } else if (this.state.selectedPost && this.props.id !== this.state.selectedPost.id) {
-            post = <p>Loading...</p>
+            post = (
+                <div className="FullPost">
+                    <p>Loading...</p>
+                </div>
+            )
         }
 
         return (
-            <div className="FullPost">
-                {post}
-            </div>
+            post
         );
     }
 }
