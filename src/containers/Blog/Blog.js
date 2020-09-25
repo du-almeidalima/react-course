@@ -9,7 +9,8 @@ import './Blog.css';
 class Blog extends Component {
     state = {
         posts: [],
-        selectedPostId: null
+        selectedPostId: null,
+        error: false
     }
 
     componentDidMount() {
@@ -22,8 +23,13 @@ class Blog extends Component {
                     }
                 })
                 this.setState({
-                    posts: mappedResp
+                    posts: mappedResp,
+                    error: false
                 })
+            })
+            .catch(err => {
+                console.log('[Blog] Error Fetching Posts: ', err);
+                this.setState({error: true})
             })
     }
 
@@ -32,14 +38,20 @@ class Blog extends Component {
     }
 
     render () {
-        const posts = this.state.posts.map( post => (
-            <Post title={post.title}
-                  author={post.author}
-                  id={post.id}
-                  key={post.id}
-                  postClicked={() => {this.selectPostHandler(post.id)}}
-            />
-        ) );
+        let posts;
+
+        if (this.state.error) {
+            posts = <p style={{textAlign: 'center', color: 'red'}}>THE TASK FAILED SUCCESSFULLY!</p>
+        } else {
+            posts = this.state.posts.map( post => (
+                <Post title={post.title}
+                      author={post.author}
+                      id={post.id}
+                      key={post.id}
+                      postClicked={() => {this.selectPostHandler(post.id)}}
+                />
+            ) );
+        }
 
         return (
             <div>
