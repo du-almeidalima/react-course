@@ -3,6 +3,7 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+import burgerBuilderAPI from '../../api/burger-builder.api';
 
 const INGREDIENTS_PRICE = new Map([
   ["salad", 0.5],
@@ -77,7 +78,25 @@ export default class BurgerBuilder extends Component {
   }
 
   confirmPurchaseModalHandler = () => {
-    alert('Confirmed!')
+    // Partially Mocked Payload
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice,
+      customer: {
+        name: 'Dudu',
+        email: 'duduzinhu@gmail.com',
+        address: {
+          street: 'Rua dos Bobos',
+          zipCode: 123456,
+          country: 'Brasil'
+        },
+        deliveryMethod: 'fastest'
+      }
+    }
+
+    burgerBuilderAPI.post('/orders.json', order)
+        .then(resp => { console.log(resp) })
+        .catch(err => { console.error(err) })
   }
 
   render() {
