@@ -1,0 +1,43 @@
+.Toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 55px;
+  width: 100%;
+  padding: 0 calc(3 * var(--padding));
+  background-color: var(--brown-100);
+}
+
+.Toolbar .Nav {
+  height: 100%;
+}
+
+.Toolbar .Logo {
+  height: 80%;
+}
+
+.SideDrawer {
+  background: url("/hamburger-icon.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 25px;
+  border: none;
+  outline: none;
+  cursor: pointer
+}
+
+@media (max-width: 576px) {
+  .DesktopOnly {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) {
+  .SideDrawer {
+    display: none;
+  }
+}

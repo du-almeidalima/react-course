@@ -1,0 +1,5 @@
+.LayoutContainer {
+  margin-top: calc(55px + var(--padding));
+  height: 100%;
+  padding: calc(var(--padding) * 2);
+}
