@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './FullPost.css';
-import axios from "axios";
+import axios from '../../config/http-axios';
 
 class FullPost extends Component {
 
@@ -14,7 +14,7 @@ class FullPost extends Component {
     componentDidUpdate() {
         if (this.props.id) {
             if (!this.state.selectedPost || (this.state.selectedPost.id !== this.props.id)) {
-                axios.get(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+                axios.get(`/posts/${this.props.id}`)
                     .then(res => {
                         const post = {
                             title: res.data.title,
