@@ -3,6 +3,7 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+import Spinner from '../../components/UI/Spinner/Spinner';
 import burgerBuilderAPI from '../../api/burger-builder.api';
 
 const INGREDIENTS_PRICE = new Map([
@@ -22,7 +23,8 @@ export default class BurgerBuilder extends Component {
     },
     totalPrice: 4,
     purchasable: false,
-    showPurchaseModal: false
+    showPurchaseModal: false,
+    isLoading: false
   };
 
   addIngredientHandler = (ingredientType) => {
@@ -78,6 +80,9 @@ export default class BurgerBuilder extends Component {
   }
 
   confirmPurchaseModalHandler = () => {
+    // Showing Spinner
+    this.setState({ isLoading: true });
+
     // Partially Mocked Payload
     const order = {
       ingredients: this.state.ingredients,
@@ -97,6 +102,10 @@ export default class BurgerBuilder extends Component {
     burgerBuilderAPI.post('/orders.json', order)
         .then(resp => { console.log(resp) })
         .catch(err => { console.error(err) })
+        .finally(() => {
+          // Hiding Spinner
+          this.setState({ isLoading: true, showPurchaseModal: false });
+        })
   }
 
   render() {
@@ -109,12 +118,15 @@ export default class BurgerBuilder extends Component {
     return (
       <Fragment>
         <Modal show={this.state.showPurchaseModal} modalClosed={this.closePurchaseModalHandler}>
-          <OrderSummary
-              ingredients={this.state.ingredients}
-              totalPrice={this.state.totalPrice}
-              cancelled={this.closePurchaseModalHandler}
-              confirmed={this.confirmPurchaseModalHandler}
-          />
+          { this.state.isLoading
+            ? <Spinner />
+            : <OrderSummary
+                  ingredients={this.state.ingredients}
+                  totalPrice={this.state.totalPrice}
+                  cancelled={this.closePurchaseModalHandler}
+                  confirmed={this.confirmPurchaseModalHandler}
+              />
+          }
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
