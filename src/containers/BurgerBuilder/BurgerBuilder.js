@@ -5,6 +5,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from '../../components/UI/Spinner/Spinner';
 import burgerBuilderAPI from '../../api/burger-builder.api';
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 const INGREDIENTS_PRICE = new Map([
   ["salad", 0.5],
@@ -13,7 +14,7 @@ const INGREDIENTS_PRICE = new Map([
   ["meat", 3.0],
 ]);
 
-export default class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
   state = {
     ingredients: {
       salad: 0,
@@ -99,12 +100,12 @@ export default class BurgerBuilder extends Component {
       }
     }
 
-    burgerBuilderAPI.post('/orders.json', order)
+    burgerBuilderAPI.post('/orders', order)
         .then(resp => { console.log(resp) })
         .catch(err => { console.error(err) })
         .finally(() => {
           // Hiding Spinner
-          this.setState({ isLoading: true, showPurchaseModal: false });
+          this.setState({ isLoading: false, showPurchaseModal: false });
         })
   }
 
@@ -141,3 +142,5 @@ export default class BurgerBuilder extends Component {
     );
   }
 }
+
+export default withErrorHandler(BurgerBuilder, burgerBuilderAPI);
