@@ -16,18 +16,28 @@ const INGREDIENTS_PRICE = new Map([
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0,
-    },
+    ingredients: null,
     totalPrice: 4,
     purchasable: false,
     showPurchaseModal: false,
-    isLoading: false
+    isLoading: false,
+    error: false
   };
 
+  // == LIFECYCLE ==
+  componentDidMount() {
+    burgerBuilderAPI.get('/ingredients')
+      .then(res => {
+        console.log(res);
+        this.setState({ ingredients: res.data });
+      })
+      .catch( err => {
+        console.error('[BurgerBuilder]: ', err);
+        this.setState({ error: true })
+      });
+  }
+
+  // == METHODS ==
   addIngredientHandler = (ingredientType) => {
     const totalPrice =
       INGREDIENTS_PRICE.get(ingredientType) + this.state.totalPrice;
@@ -109,27 +119,40 @@ class BurgerBuilder extends Component {
         })
   }
 
+  // == TEMPLATE ==
   render() {
-    const removeBtnDisabledIngredients = Object.keys(this.state.ingredients)
-    .reduce((acc, curr) => {
-      acc[curr] = this.state.ingredients[curr] <= 0;
-      return acc;
-    }, {});
+    let removeBtnDisabledIngredients = {};
+
+    if (this.state.ingredients) {
+      removeBtnDisabledIngredients = Object.keys(this.state.ingredients)
+        .reduce((acc, curr) => {
+          acc[curr] = this.state.ingredients[curr] <= 0;
+          return acc;
+        }, {});
+    }
 
     return (
       <Fragment>
-        <Modal show={this.state.showPurchaseModal} modalClosed={this.closePurchaseModalHandler}>
-          { this.state.isLoading
-            ? <Spinner />
-            : <OrderSummary
-                  ingredients={this.state.ingredients}
-                  totalPrice={this.state.totalPrice}
-                  cancelled={this.closePurchaseModalHandler}
-                  confirmed={this.confirmPurchaseModalHandler}
-              />
-          }
-        </Modal>
-        <Burger ingredients={this.state.ingredients} />
+        {
+          this.state.ingredients
+          ? <Fragment>
+              <Modal show={this.state.showPurchaseModal} modalClosed={this.closePurchaseModalHandler}>
+                { this.state.isLoading
+                  ? <Spinner />
+                  : <OrderSummary
+                        ingredients={this.state.ingredients}
+                        totalPrice={this.state.totalPrice}
+                        cancelled={this.closePurchaseModalHandler}
+                        confirmed={this.confirmPurchaseModalHandler}
+                    />
+                }
+              </Modal>
+              <Burger ingredients={this.state.ingredients} />
+            </Fragment>
+          : this.state.error 
+            ? <h2 style={{textAlign: "center", color: 'red'}}>Something went wrong!</h2>
+            : <Spinner />
+        }
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
