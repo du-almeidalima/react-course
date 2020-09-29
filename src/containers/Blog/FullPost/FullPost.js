@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './FullPost.css';
-import axios from '../../config/http-axios';
+import axios from '../../../api/posts.api';
 
 class FullPost extends Component {
 

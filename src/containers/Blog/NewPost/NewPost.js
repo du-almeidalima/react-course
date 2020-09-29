@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from '../../config/http-axios';
+import PostAPI from '../../../api/posts.api';
 
 import './NewPost.css';
 
@@ -17,7 +17,7 @@ class NewPost extends Component {
             author: this.state.author,
         }
 
-        axios.post('/posts', post)
+        PostAPI.post('/posts', post)
             .then(res => {
                 console.log(res);
             })
