@@ -26,7 +26,7 @@ class BurgerBuilder extends Component {
 
   // == LIFECYCLE ==
   componentDidMount() {
-    burgerBuilderAPI.get('/ingredients')
+    burgerBuilderAPI.get('/ingredients.json')
       .then(res => {
         console.log(res);
         this.setState({ ingredients: res.data });

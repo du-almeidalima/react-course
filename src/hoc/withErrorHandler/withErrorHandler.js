@@ -9,11 +9,11 @@ const withErrorHandler = (WrappedComponent, axiosInstance) => {
       type: null,
     };
 
-
+    // == LIFECYCLE ==
     componentWillMount() {
       // This is going to set this callback function to the AxiosInterceptor Reference passed as parameter
       if (axiosInstance) {
-        axiosInstance.interceptors.response.use(
+        this.resInterceptor = axiosInstance.interceptors.response.use(
             (res) => res,
             (err) => {
               this.setState({
@@ -27,7 +27,13 @@ const withErrorHandler = (WrappedComponent, axiosInstance) => {
         );
       }
     }
-    
+
+    componentWillUnmount() {
+      // This ensures that whenever this component is no longer used, the interceptor is also destroyed.
+      axiosInstance.interceptors.response.eject(this.resInterceptor);
+    }
+
+    // == METHODS ==
     close = () => {
       this.setState({
         show: false,
