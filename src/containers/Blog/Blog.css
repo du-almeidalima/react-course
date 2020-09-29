@@ -17,6 +17,9 @@
     text-align: center;
 }
 
-.Navbar > ul > li > a:hover, .Navbar > ul > li > a:active {
+.Navbar > ul > li > a:hover,
+.Navbar > ul > li > a:active,
+.Navbar > ul > li > a.custom-active,
+.Navbar > ul > li > a.active {
     color: black;
 }

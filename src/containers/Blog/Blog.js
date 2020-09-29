@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import Posts from './Posts/Posts';
 import NewPost from './NewPost/NewPost';
@@ -16,13 +16,13 @@ class Blog extends Component {
             <nav className="Navbar">
                 <ul>
                     <li>
-                      <Link to="/">Home</Link>
+                      <NavLink to="/" exact activeClassName="custom-active">Home</NavLink>
                     </li>
                     <li>
-                      <Link to={{ pathname: '/compose' }}>Compose</Link>
+                      <NavLink to={{ pathname: '/compose' }}>Compose</NavLink>
                     </li>
                     <li>
-                      <Link to="/users">Users</Link>
+                      <NavLink to="/users">Users</NavLink>
                     </li>
                 </ul>
             </nav>

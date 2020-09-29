@@ -16,3 +16,9 @@ const post = (props) => {
 };
 
 export default withRouter(post);
+
+/*
+ * The Router props, thar are being passed to Posts component, are not send down in the component tree to its children.
+ * However, we can access those Router props (history, match, location) with the "withRouter" HOC. Wrapping the child component
+ * with this HOC will inject those parent props into the children props.
+ */
