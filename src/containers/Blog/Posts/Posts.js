@@ -11,7 +11,6 @@ export default class Posts extends Component {
     error: false,
   };
 
-
   componentDidMount() {
     PostAPI
       .get("/posts")
