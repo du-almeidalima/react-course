@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { NavLink, Route, Switch } from "react-router-dom";
-
-import Posts from './Posts/Posts';
-import NewPost from './NewPost/NewPost';
-import FullPost from './FullPost/FullPost';
+import { NavLink, Route, Switch, Redirect } from "react-router-dom";
 
 import "./Blog.css";
+import NewPost from './NewPost/NewPost';
+import Posts from './Posts/Posts';
+
+
 
 class Blog extends Component {
   render() {
@@ -31,6 +31,7 @@ class Blog extends Component {
         <Switch>
           <Route path="/compose" component={NewPost} />
           <Route path="/posts" component={Posts} />
+          <Redirect from="/" to="/posts" />
         </Switch>
       </div>
     );

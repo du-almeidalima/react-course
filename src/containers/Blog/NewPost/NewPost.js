@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import PostAPI from '../../../api/posts.api';
 
 import './NewPost.css';
@@ -7,7 +8,8 @@ class NewPost extends Component {
     state = {
         title: '',
         content: '',
-        author: 'Max'
+        author: 'Dudu',
+        redirect: false
     }
 
     addPostClickHandler = () => {
@@ -20,12 +22,18 @@ class NewPost extends Component {
         PostAPI.post('/posts', post)
             .then(res => {
                 console.log(res);
+                // Setting redirect state to true so it re-renders the Redirect component
+                this.setState({ redirect: true });
             })
     }
 
     render () {
+        // When the Redirect component is rendered outside <Switch> component, it redirects instantly
+        const redirect = this.state.redirect ? <Redirect to='/'/> : null;
+
         return (
             <div className="NewPost">
+                {redirect}
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />

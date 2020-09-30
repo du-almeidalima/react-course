@@ -73,7 +73,7 @@ class FullPost extends Component {
             </div>
         );
 
-        if (this.state.selectedPost) {
+        if (this.state.selectedPost && this.state.selectedPost.id === +this.props.match.params.id) {
             post = (
                 <div className="FullPost">
                     <h1>{this.state.selectedPost.title}</h1>
