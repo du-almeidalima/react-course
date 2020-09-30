@@ -2,15 +2,13 @@ import React, { Component } from "react";
 import { NavLink, Route, Switch, Redirect } from "react-router-dom";
 
 import "./Blog.css";
-import NewPost from './NewPost/NewPost';
 import Posts from './Posts/Posts';
-
-
+import lazyLoadComponent from "../../hoc/lazyLoadComponent";
 
 class Blog extends Component {
 
   state = {
-    auth: false
+    auth: true
   }
 
   render() {
@@ -35,7 +33,11 @@ class Blog extends Component {
 
         <Switch>
           {/* React Guard |e| */}
-          { this.state.auth ? <Route path="/compose" component={NewPost} /> : null }
+          { this.state.auth
+            // Lazy loading a component with our custom HOC
+            ? <Route path="/compose" component={lazyLoadComponent(() => import('./NewPost/NewPost'))} />
+            : null
+          }
           <Route path="/posts" component={Posts} />
           <Redirect from="/" exact to="/posts" />
           {/* This will render any route not mapped */}
