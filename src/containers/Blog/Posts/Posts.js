@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Posts.css';
 import Post from '../../../components/Post/Post';
 import PostAPI from '../../../api/posts.api';
@@ -45,12 +46,13 @@ export default class Posts extends Component {
       posts = <p style={{textAlign: 'center', color: 'red'}}>THE TASK FAILED SUCCESSFULLY!</p>
     } else {
       posts = this.state.posts.map( post => (
-        <Post title={post.title}
-              author={post.author}
-              id={post.id}
-              key={post.id}
-              postClicked={() => {this.selectPostHandler(post.id)}}
-        />
+        <Link to={'/' + post.id} key={post.id} style={{display: 'inline-block', textDecoration: 'none', color: 'black', width: '90%'}}>
+          <Post title={post.title}
+                author={post.author}
+                id={post.id}
+                postClicked={() => {this.selectPostHandler(post.id)}}
+          />
+        </Link>
       ) );
     }
 

@@ -6,24 +6,29 @@ import axios from '../../../api/posts.api';
 class FullPost extends Component {
 
     state = {
-        selectedPost: null
+        selectedPost: null,
+        error: false
     }
 
     // This method will be executed whenever a prop/state in this component change, so we can use this hook to
     // Fetch data
-    componentDidUpdate() {
-        if (this.props.id) {
-            if (!this.state.selectedPost || (this.state.selectedPost.id !== this.props.id)) {
-                axios.get(`/posts/${this.props.id}`)
-                    .then(res => {
-                        const post = {
-                            title: res.data.title,
-                            content: res.data.body,
-                            id: res.data.id
-                        }
-                        this.setState({ selectedPost: post })
-                    })
-            }
+    componentDidMount() {
+        const { id } = this.props.match.params;
+
+        if (id) {
+            axios.get(`/posts/${id}`)
+                .then(res => {
+                    const post = {
+                        title: res.data.title,
+                        content: res.data.body,
+                        id: res.data.id
+                    }
+
+                    this.setState({ selectedPost: post })
+                })
+                .catch(err => {
+                    this.setState({ error: true })
+                })
         }
     }
 
@@ -50,11 +55,11 @@ class FullPost extends Component {
     render () {
         let post = (
             <div className="FullPost">
-                <p>Please select a Post!</p>
+                <p style={{color: 'red'}}>ERROR!</p>
             </div>
         );
 
-        if (this.state.selectedPost && this.props.id === this.state.selectedPost.id) {
+        if (this.state.selectedPost) {
             post = (
                 <div className="FullPost">
                     <h1>{this.state.selectedPost.title}</h1>
@@ -64,7 +69,7 @@ class FullPost extends Component {
                     </div>
                 </div>
             )
-        } else if (this.state.selectedPost && this.props.id !== this.state.selectedPost.id) {
+        } else if (this.props.match.params.id && !this.state.error) {
             post = (
                 <div className="FullPost">
                     <p>Loading...</p>
