@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import './Posts.css';
+
 import Post from '../../../components/Post/Post';
+import FullPost from '../FullPost/FullPost';
 import PostAPI from '../../../api/posts.api';
 
 export default class Posts extends Component {
@@ -35,8 +38,8 @@ export default class Posts extends Component {
 
   selectPostHandler = (id) => {
     // Navigating Programmatically
-    this.props.history.push({ pathname: '/' + id});
-    // this.props.history.push('/' + id);
+    this.props.history.push({ pathname: '/posts/' + id});
+    // this.props.history.push('/posts/' + id);
   };
 
   render() {
@@ -57,6 +60,7 @@ export default class Posts extends Component {
     return (
       <section className="Posts">
         { posts }
+        <Route path={this.props.match.url + '/:id'} exact component={FullPost} />
       </section>
     )
   }

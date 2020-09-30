@@ -10,26 +10,40 @@ class FullPost extends Component {
         error: false
     }
 
+    // == LIFECYCLE ==
     // This method will be executed whenever a prop/state in this component change, so we can use this hook to
-    // Fetch data
+    // Fetch data. Note that when using this component as a child route, it will not mount, when it's already rendered
+    // Even if the rout it's assign to changes. That's why componentDidUpdate was used.
     componentDidMount() {
+        this.fetchData();
+    }
+
+    componentDidUpdate(prevProps) {
+        const id = +this.props.match.params.id;
+        const previousId = +prevProps.match.params.id;
+
+        if (id !== previousId) {
+            this.fetchData();
+        }
+    }
+
+    // == METHODS ==
+    fetchData() {
         const { id } = this.props.match.params;
 
-        if (id) {
-            axios.get(`/posts/${id}`)
-                .then(res => {
-                    const post = {
-                        title: res.data.title,
-                        content: res.data.body,
-                        id: res.data.id
-                    }
+        axios.get(`/posts/${id}`)
+        .then(res => {
+            const post = {
+                title: res.data.title,
+                content: res.data.body,
+                id: res.data.id
+            }
 
-                    this.setState({ selectedPost: post })
-                })
-                .catch(err => {
-                    this.setState({ error: true })
-                })
-        }
+            this.setState({ selectedPost: post })
+        })
+        .catch(err => {
+            this.setState({ error: true })
+        });
     }
 
     addPostClickHandler = () => {
