@@ -12,6 +12,11 @@ class NewPost extends Component {
         redirect: false
     }
 
+    componentDidMount() {
+        // We can also check if the user is auth here and create a "Guard"
+        // this.props.history.replace('/posts')
+    }
+
     addPostClickHandler = () => {
         const post = {
             title: this.state.title,
@@ -23,7 +28,10 @@ class NewPost extends Component {
             .then(res => {
                 console.log(res);
                 // Setting redirect state to true so it re-renders the Redirect component
-                this.setState({ redirect: true });
+                // this.setState({ redirect: true });
+
+                this.props.history.push('/posts');
+                // this.props.history.replace('/posts');
             })
     }
 
@@ -33,7 +41,7 @@ class NewPost extends Component {
 
         return (
             <div className="NewPost">
-                {redirect}
+                {/* {redirect} */}
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />

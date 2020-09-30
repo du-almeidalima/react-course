@@ -60,7 +60,7 @@ class FullPost extends Component {
     }
 
     deletePostClickHandler = () => {
-        axios.delete(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+        axios.delete(`https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`)
             .then(res => {
                 console.log(res);
             })
