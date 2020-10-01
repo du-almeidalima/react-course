@@ -1,0 +1,33 @@
+.Navigation {
+  width: 100%;
+  border-bottom: 1px solid lightblue;
+}
+
+.Navigation > ul {
+  margin: 0;
+  padding: 0;
+}
+
+.Navigation > ul > li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 25px;
+}
+
+.Navigation > ul > li > a {
+  color: darkblue;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.Navigation > ul > li > a.active,
+.Navigation > ul > li > a:active,
+.Navigation > ul > li > a:hover {
+  color: aquamarine;
+}
+
+.NavigateBackBtn {
+  cursor: pointer;
+  position: absolute;
+  left: 20%;
+}

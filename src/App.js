@@ -1,53 +1,42 @@
-import React, {Component, Suspense} from 'react';
-import {BrowserRouter, Route, NavLink} from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import Navigation from './components/navigation/Navigation';
 
-// import Posts from './containers/Posts';
-// import User from './containers/User';
-import Welcome from './containers/Welcome';
-
-const User = React.lazy(() => import('./containers/User'));
-const Posts = React.lazy(() => import('./containers/Posts'));
+import Courses from './containers/Courses/Courses';
+import withLazyComponent from './hoc/withLazyComponent';
 
 class App extends Component {
-    state = {
-        loadPosts: false
-    }
+  render () {
+    return (
+      <div className="App">
+        <ol style={{textAlign: 'left', marginBottom: '25px'}}>
+          <li>Add Routes to load "Users" and "Courses" on different pages (by entering a URL, without Links)</li>
+          <li>Add a simple navigation with two links => One leading to "Users", one leading to "Courses"</li>
+          <li>Make the courses in "Courses" clickable by adding a link and load the "Course" component in the place of "Courses" (without passing any data for now)</li>
+          <li>Pass the course ID to the "Course" page and output it there</li>
+          <li>Pass the course title to the "Course" page - pass it as a param or score bonus points by passing it as query params (you need to manually parse them though!)</li>
+          <li>Load the "Course" component as a nested component of "Courses"</li>
+          <li>Add a 404 error page and render it for any unknown routes</li>
+          <li>Redirect requests to /all-courses to /courses (=> Your "Courses" page)</li>
+        </ol>
 
-    render() {
-        return (
-            <BrowserRouter>
-                <React.Fragment>
-                    <nav>
-                        <NavLink to="/user">User Page</NavLink> |&nbsp;
-                        <NavLink to="/posts">Posts Page</NavLink>
-                    </nav>
-                    <Route path="/" component={Welcome} exact/>
-                    <Route path="/user" render={() => (
-                        <Suspense fallback={<div>Loading</div>}>
-                            <User/>
-                        </Suspense>
-                    )}/>
+        <BrowserRouter>
+          <div className="AppContainer">
+            <header>
+              <Navigation />
+            </header>
 
-                    {/*  Loading Components without Route */}
-                    <hr/>
-                    <button onClick={() => this.setState({loadPosts: true})}
-                            disabled={this.state.loadPosts}
-                    >
-                        Load Posts Component
-                    </button>
-
-                    { this.state.loadPosts ?
-                        (
-                            <Suspense fallback={<h1>Loading Posts...</h1>}>
-                                <Posts />
-                            </Suspense>
-                        )
-                        : null
-                    }
-                </React.Fragment>
-            </BrowserRouter>
-        );
-    }
+            <Switch>
+              <Route path="/courses" component={Courses} />
+              <Route path="/users" component={withLazyComponent(() => import('./containers/Users/Users'))} />
+              <Redirect from="/all-courses" to="/courses" />
+              <Route render={() => <h1>Not Found: 404</h1>}/>
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;
