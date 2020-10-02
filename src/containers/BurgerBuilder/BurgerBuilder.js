@@ -39,8 +39,7 @@ class BurgerBuilder extends Component {
 
   // == METHODS ==
   addIngredientHandler = (ingredientType) => {
-    const totalPrice =
-      INGREDIENTS_PRICE.get(ingredientType) + this.state.totalPrice;
+    const totalPrice = INGREDIENTS_PRICE.get(ingredientType) + this.state.totalPrice;
     const ingredientCount = this.state.ingredients[ingredientType] + 1;
     const ingredients = {
       ...this.state.ingredients,
@@ -93,23 +92,27 @@ class BurgerBuilder extends Component {
   confirmPurchaseModalHandler = () => {
     // Showing Spinner
     this.setState({ isLoading: true });
-    this.props.history.push('/checkout');
 
     // Partially Mocked Payload
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   customer: {
-    //     name: 'Dudu',
-    //     email: 'duduzinhu@gmail.com',
-    //     address: {
-    //       street: 'Rua dos Bobos',
-    //       zipCode: 123456,
-    //       country: 'Brasil'
-    //     },
-    //     deliveryMethod: 'fastest'
-    //   }
-    // }
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice,
+      customer: {
+        name: 'Dudu',
+        email: 'duduzinhu@gmail.com',
+        address: {
+          street: 'Rua dos Bobos',
+          zipCode: 123456,
+          country: 'Brasil'
+        },
+        deliveryMethod: 'fastest'
+      }
+    }
+
+    this.props.history.push({
+      pathname: '/checkout',
+      search: new URLSearchParams(order.ingredients).toString()
+    });
 
     // burgerBuilderAPI.post('/orders', order)
     //     .then(resp => { console.log(resp) })

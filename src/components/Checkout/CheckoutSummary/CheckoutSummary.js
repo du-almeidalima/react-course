@@ -6,6 +6,16 @@ import { withRouter } from 'react-router-dom';
 
 const checkoutSummary = props => {
 
+    // Ingredients from URL Search Params
+    const searchParamsIngredients = new URLSearchParams(props.location.search);
+    let ingredients = {};
+
+    for(const [ key, value ] of searchParamsIngredients.entries()) {
+        ingredients[key] = +value;
+    }
+
+    console.log(ingredients);
+
     const cancelHandler = () => {
         props.history.goBack();
     }
@@ -19,7 +29,7 @@ const checkoutSummary = props => {
             <h1 className={CheckoutSummaryStyle.Title}>Are we done with this master piece?</h1>
 
             <div className={CheckoutSummaryStyle.BurgerContainer}>
-                <Burger ingredients={props.ingredients}/>
+                <Burger ingredients={ingredients}/>
             </div>
 
             <Button type="Danger" fillStyle="Outline" onClick={cancelHandler} styles={{marginRight: '10px'}}>
