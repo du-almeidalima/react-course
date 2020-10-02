@@ -93,30 +93,31 @@ class BurgerBuilder extends Component {
   confirmPurchaseModalHandler = () => {
     // Showing Spinner
     this.setState({ isLoading: true });
+    this.props.history.push('/checkout');
 
     // Partially Mocked Payload
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Dudu',
-        email: 'duduzinhu@gmail.com',
-        address: {
-          street: 'Rua dos Bobos',
-          zipCode: 123456,
-          country: 'Brasil'
-        },
-        deliveryMethod: 'fastest'
-      }
-    }
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: 'Dudu',
+    //     email: 'duduzinhu@gmail.com',
+    //     address: {
+    //       street: 'Rua dos Bobos',
+    //       zipCode: 123456,
+    //       country: 'Brasil'
+    //     },
+    //     deliveryMethod: 'fastest'
+    //   }
+    // }
 
-    burgerBuilderAPI.post('/orders', order)
-        .then(resp => { console.log(resp) })
-        .catch(err => { console.error(err) })
-        .finally(() => {
-          // Hiding Spinner
-          this.setState({ isLoading: false, showPurchaseModal: false });
-        })
+    // burgerBuilderAPI.post('/orders', order)
+    //     .then(resp => { console.log(resp) })
+    //     .catch(err => { console.error(err) })
+    //     .finally(() => {
+    //       // Hiding Spinner
+    //       this.setState({ isLoading: false, showPurchaseModal: false });
+    //     })
   }
 
   // == TEMPLATE ==
