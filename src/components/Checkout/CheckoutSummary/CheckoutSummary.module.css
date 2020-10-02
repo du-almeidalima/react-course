@@ -1,0 +1,18 @@
+.CheckoutSummaryWrapper {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.BurgerContainer {
+    margin: calc(3 * var(--padding)) auto;
+}
+
+.Title {
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .CheckoutSummaryWrapper {
+        width: 75%;
+    }
+}
