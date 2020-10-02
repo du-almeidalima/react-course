@@ -1,45 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Burger from "../../Burger/Burger";
 import CheckoutSummaryStyle from './CheckoutSummary.module.css';
 import Button from "../../UI/Button/Button";
 import { withRouter } from 'react-router-dom';
 
-const checkoutSummary = props => {
+class CheckoutSummary extends Component {
 
-    // Ingredients from URL Search Params
-    const searchParamsIngredients = new URLSearchParams(props.location.search);
-    let ingredients = {};
-
-    for(const [ key, value ] of searchParamsIngredients.entries()) {
-        ingredients[key] = +value;
+    state = {
+        ingredients: {}
     }
 
-    console.log(ingredients);
+    componentDidMount() {
+        // Ingredients from URL Search Params
+        const searchParamsIngredients = new URLSearchParams(this.props.location.search);
+        const ingredients = {};
 
-    const cancelHandler = () => {
-        props.history.goBack();
+        for(const [ key, value ] of searchParamsIngredients.entries()) {
+            ingredients[key] = +value;
+        }
+
+        this.setState({ ingredients })
     }
 
-    const continueHandler = () => {
-        props.history.push('/buyer-data');
+    cancelHandler = () => {
+        this.props.history.goBack();
     }
 
-    return (
-        <div className={CheckoutSummaryStyle.CheckoutSummaryWrapper}>
-            <h1 className={CheckoutSummaryStyle.Title}>Are we done with this master piece?</h1>
+    continueHandler = () => {
+        this.props.history.push(this.props.match.path + '/contact');
+    }
 
-            <div className={CheckoutSummaryStyle.BurgerContainer}>
-                <Burger ingredients={ingredients}/>
+    render() {
+        return (
+            <div className={CheckoutSummaryStyle.CheckoutSummaryWrapper}>
+                <h1 className={CheckoutSummaryStyle.Title}>Are we done with this master piece?</h1>
+                <div className={CheckoutSummaryStyle.BurgerContainer}>
+                    <Burger ingredients={this.state.ingredients}/>
+                </div>
+                <div className={CheckoutSummaryStyle.ActionWrapper}>
+                    <Button type="Danger" fillStyle="Outline" onClick={this.cancelHandler} styles={{marginRight: '10px'}}>
+                        Cancels
+                    </Button>
+                    <Button type="Success" fillStyle="Full" onClick={this.continueHandler}>
+                        Continue
+                    </Button>
+                </div>
             </div>
-
-            <Button type="Danger" fillStyle="Outline" onClick={cancelHandler} styles={{marginRight: '10px'}}>
-                Cancel
-            </Button>
-            <Button type="Success" fillStyle="Full" onClick={continueHandler}>
-                Continue
-            </Button>
-        </div>
-    );
+        );
+    }
 };
 
-export default withRouter(checkoutSummary);
+export default withRouter(CheckoutSummary);

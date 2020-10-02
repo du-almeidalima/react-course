@@ -11,6 +11,11 @@
     text-align: center;
 }
 
+.ActionWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (min-width: 768px) {
     .CheckoutSummaryWrapper {
         width: 75%;

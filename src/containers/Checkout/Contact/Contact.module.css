@@ -1,0 +1,37 @@
+.ContactWrapper {
+  margin: var(--padding) auto;
+  width: 100%;
+}
+
+.Control {
+  display: block;
+  width: 100%;
+  padding: var(--padding);
+  margin: var(--padding) auto;
+  border-radius: var(--padding);
+  border: 1px solid gray;
+}
+
+.Control:active,
+.Control:focus {
+  border-color: var(--success);
+}
+
+.FormWrapper {
+  margin: calc(2 * var(--padding)) auto;
+}
+
+.Title {
+  text-align: center;
+}
+
+.OrderBtn {
+  margin-top: var(--padding);
+  float: right;
+}
+
+@media (min-width: 768px) {
+  .ContactWrapper {
+      width: 75%;
+  }
+}

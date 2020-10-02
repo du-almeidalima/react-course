@@ -24,15 +24,17 @@ const button = props => {
         fillStyle: props.fillStyle,
         type: props.type,
         children: props.children,
-        styles: props.styles
+        styles: props.styles,
+        classes: props.classes
     }
 
     const btnFillStyle = buttonProps.fillStyle ? buttonProps.fillStyle : null;
     const classes = [ButtonStyle.Btn, ButtonStyle[buttonProps.type], ButtonStyle[btnFillStyle]].join(' ');
+    const customClasses = props.classes ? buttonProps.classes : null;
     const nativeButtonHtmlProps = extractCustomProps(props, buttonProps);
 
     return (
-        <button {...nativeButtonHtmlProps} className={classes} style={{...buttonProps.styles}}>
+        <button {...nativeButtonHtmlProps} className={`${classes} ${customClasses}`} style={{...buttonProps.styles}}>
             {props.children}
         </button>
     )
