@@ -6,22 +6,6 @@ import { withRouter } from 'react-router-dom';
 
 class CheckoutSummary extends Component {
 
-    state = {
-        ingredients: {}
-    }
-
-    componentDidMount() {
-        // Ingredients from URL Search Params
-        const searchParamsIngredients = new URLSearchParams(this.props.location.search);
-        const ingredients = {};
-
-        for(const [ key, value ] of searchParamsIngredients.entries()) {
-            ingredients[key] = +value;
-        }
-
-        this.setState({ ingredients })
-    }
-
     cancelHandler = () => {
         this.props.history.goBack();
     }
@@ -35,7 +19,7 @@ class CheckoutSummary extends Component {
             <div className={CheckoutSummaryStyle.CheckoutSummaryWrapper}>
                 <h1 className={CheckoutSummaryStyle.Title}>Are we done with this master piece?</h1>
                 <div className={CheckoutSummaryStyle.BurgerContainer}>
-                    <Burger ingredients={this.state.ingredients}/>
+                    <Burger ingredients={this.props.ingredients}/>
                 </div>
                 <div className={CheckoutSummaryStyle.ActionWrapper}>
                     <Button type="Danger" fillStyle="Outline" onClick={this.cancelHandler} styles={{marginRight: '10px'}}>
@@ -48,6 +32,6 @@ class CheckoutSummary extends Component {
             </div>
         );
     }
-};
+}
 
 export default withRouter(CheckoutSummary);

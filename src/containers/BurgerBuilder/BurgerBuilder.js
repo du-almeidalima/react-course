@@ -90,37 +90,13 @@ class BurgerBuilder extends Component {
   }
 
   confirmPurchaseModalHandler = () => {
-    // Showing Spinner
-    this.setState({ isLoading: true });
-
-    // Partially Mocked Payload
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Dudu',
-        email: 'duduzinhu@gmail.com',
-        address: {
-          street: 'Rua dos Bobos',
-          zipCode: 123456,
-          country: 'Brasil'
-        },
-        deliveryMethod: 'fastest'
-      }
-    }
-
     this.props.history.push({
       pathname: '/checkout',
-      search: new URLSearchParams(order.ingredients).toString()
+      search: new URLSearchParams({
+        ...this.state.ingredients,
+        totalPrice: this.state.totalPrice.toString()
+      }).toString(),
     });
-
-    // burgerBuilderAPI.post('/orders', order)
-    //     .then(resp => { console.log(resp) })
-    //     .catch(err => { console.error(err) })
-    //     .finally(() => {
-    //       // Hiding Spinner
-    //       this.setState({ isLoading: false, showPurchaseModal: false });
-    //     })
   }
 
   // == TEMPLATE ==
