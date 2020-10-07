@@ -31,3 +31,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Container {
+  width: 90%;
+  height: 100vh;
+}
+
+.PageTitle {
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+  margin-bottom: calc(2 * var(--padding));
+}
+
+.PageTitle::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  opacity: 0.5;
+  margin-left: calc(2 * var(--padding));
+  background-color: var(--brown-100);
+}

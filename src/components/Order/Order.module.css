@@ -1,0 +1,10 @@
+.OrderWrapper {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 3px #ccc;
+  width: 100%;
+  padding: calc(2 * var(--padding));
+  margin: calc(2 * var(--padding)) auto;
+}

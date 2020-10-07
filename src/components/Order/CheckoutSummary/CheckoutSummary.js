@@ -17,17 +17,17 @@ class CheckoutSummary extends Component {
     render() {
         return (
             <div className={CheckoutSummaryStyle.CheckoutSummaryWrapper}>
-                <h1 className={CheckoutSummaryStyle.Title}>Are we done with this master piece?</h1>
-                <div className={CheckoutSummaryStyle.BurgerContainer}>
-                    <Burger ingredients={this.props.ingredients}/>
-                </div>
-                <div className={CheckoutSummaryStyle.ActionWrapper}>
-                    <Button type="Danger" fillStyle="Outline" onClick={this.cancelHandler} styles={{marginRight: '10px'}}>
-                        Cancels
+                <div className={CheckoutSummaryStyle.TitleHeader}>
+                    <Button classes={CheckoutSummaryStyle.Cancel} type="Danger" fillStyle="Outline" onClick={this.cancelHandler}>
+                        Cancel
                     </Button>
-                    <Button type="Success" fillStyle="Full" onClick={this.continueHandler}>
+                    <h2 className={CheckoutSummaryStyle.Title}>Are we done with this master piece?</h2>
+                    <Button classes={CheckoutSummaryStyle.Continue} type="Success" fillStyle="Full" onClick={this.continueHandler}>
                         Continue
                     </Button>
+                </div>
+                <div className={CheckoutSummaryStyle.BurgerContainer}>
+                    <Burger ingredients={this.props.ingredients}/>
                 </div>
             </div>
         );

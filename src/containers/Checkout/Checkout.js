@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Route } from 'react-router-dom';
 
-import CheckoutSummary from '../../components/Checkout/CheckoutSummary/CheckoutSummary';
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import Contact from './Contact/Contact';
 
 class Checkout extends Component {
@@ -30,6 +30,7 @@ class Checkout extends Component {
     render() {
         return (
             <div>
+                <h1 className="PageTitle">Checkout</h1>
                 <CheckoutSummary ingredients={this.state.ingredients} />
                 {/* Using 'render' to pass props */}
                 <Route path={this.props.match.path + '/contact'}
