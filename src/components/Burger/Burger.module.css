@@ -11,7 +11,7 @@
 @media (min-width: 768px) {
   .Burger {
     width: 500px;
-    min-height: 500px;
+    min-height: 400px;
     max-height: 500px;
   }
 }

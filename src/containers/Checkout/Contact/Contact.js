@@ -1,10 +1,11 @@
 import React, {Component, Fragment} from 'react'
 import ContactStyle from './Contact.module.css';
-
-import Button from '../../../components/UI/Button/Button';
-import burgerBuilderAPI from "../../../api/burger-builder.api";
-import Spinner from "../../../components/UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
+
+import burgerBuilderAPI from "../../../api/burger-builder.api";
+import Button from '../../../components/UI/Button/Button';
+import Input from "../../../components/UI/Input/Input";
+import Spinner from "../../../components/UI/Spinner/Spinner";
 
 class Contact extends Component {
     state = {
@@ -55,15 +56,11 @@ class Contact extends Component {
                         </section>
                         <div className={ContactStyle.FormWrapper}>
                             <form onSubmit={this.handleFormSubmission}>
-                                <input className={ContactStyle.Control} type="text" name="name" placeholder="Name"/>
-                                <input className={ContactStyle.Control} type="email" name="email" placeholder="Email"/>
-                                <input className={ContactStyle.Control} type="text" name="street" placeholder="Street"/>
-                                <input className={ContactStyle.Control} type="text" name="postalCode"
-                                       placeholder="Postal Code"/>
-                                <Button type="Success"
-                                        fillStyle="Full"
-                                        classes={ContactStyle.OrderBtn}
-                                >
+                                <Input inputtype="input" type="text" name="name" placeholder="Name"/>
+                                <Input inputtype="input" type="email" name="email" placeholder="Email"/>
+                                <Input inputtype="input" type="text" name="street" placeholder="Street"/>
+                                <Input inputtype="input" type="text" name="postalCode" placeholder="Postal Code"/>
+                                <Button type="Success" fillStyle="Full" classes={ContactStyle.OrderBtn}>
                                     Order Now!
                                 </Button>
                             </form>

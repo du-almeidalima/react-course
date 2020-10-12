@@ -1,0 +1,22 @@
+.InputWrapper {
+  width: 100%;
+}
+
+.Input {
+  display: block;
+  width: 100%;
+  padding: var(--padding);
+  margin: var(--padding) auto;
+  border-radius: var(--padding);
+  border: 1px solid gray;
+}
+
+.Input:active,
+.Input:focus {
+  border-color: var(--success);
+}
+
+.Label {
+  font-weight: bold;
+  display: block;
+}

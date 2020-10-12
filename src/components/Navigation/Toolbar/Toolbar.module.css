@@ -9,6 +9,7 @@
   width: 100%;
   padding: 0 calc(3 * var(--padding));
   background-color: var(--brown-100);
+  z-index: 999;
 }
 
 .Toolbar .Nav {
@@ -20,9 +21,8 @@
 }
 
 .SideDrawer {
-  background: url("/hamburger-icon.png");
   background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background: url("/hamburger-icon.png") no-repeat;
   width: 30px;
   height: 25px;
   border: none;
