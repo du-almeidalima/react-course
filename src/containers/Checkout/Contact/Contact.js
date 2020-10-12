@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react'
 import ContactStyle from './Contact.module.css';
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 import burgerBuilderAPI from "../../../api/burger-builder.api";
 import Button from '../../../components/UI/Button/Button';
@@ -64,6 +64,20 @@ class Contact extends Component {
         isLoading: false
     }
 
+    handleInputChange = (e, controlKey) => {
+        // The state needs to be treated immutably, so for each level of object nesting we need to create a shallow copy
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        }
+
+        updatedOrderForm[controlKey] = {
+            ...updatedOrderForm[controlKey],
+            value: e.target.value
+        };
+
+        this.setState({orderForm: updatedOrderForm});
+    }
+
     handleFormSubmission = (e) => {
         e.preventDefault();
         // Showing Spinner
@@ -91,6 +105,7 @@ class Contact extends Component {
             return <Input key={controlKey}
                           elementType={controlValue.elementType}
                           elementConfig={controlValue.elementConfig}
+                          changed={e => {this.handleInputChange(e, controlKey)}}
             />
         });
 
