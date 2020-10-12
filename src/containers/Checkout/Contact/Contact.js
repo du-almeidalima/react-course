@@ -58,7 +58,7 @@ class Contact extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'},
                     ]
                 },
-                value: ''
+                value: 'fastest'
             }
         },
         isLoading: false
@@ -76,17 +76,23 @@ class Contact extends Component {
         };
 
         this.setState({orderForm: updatedOrderForm});
+        console.log(this.state.orderForm['deliveryMethod']);
     }
 
     handleFormSubmission = (e) => {
         e.preventDefault();
         // Showing Spinner
         this.setState({ isLoading: true });
-        console.log(this.props)
+
+        const orderData = Object.entries(this.state.orderForm).reduce((acc, cur) => {
+            return { ...acc, [cur[0]]: cur[1].value }
+        }, {});
+
         // Partially Mocked Payload
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.totalPrice
+            price: this.props.totalPrice,
+            orderData
         }
 
         burgerBuilderAPI.post('/orders.json', order)
