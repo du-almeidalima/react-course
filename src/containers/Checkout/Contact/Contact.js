@@ -9,6 +9,58 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 
 class Contact extends Component {
     state = {
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your name'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your E-mail'
+                },
+                value: ''
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: ''
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Zip Code'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'},
+                    ]
+                },
+                value: ''
+            }
+        },
         isLoading: false
     }
 
@@ -20,17 +72,7 @@ class Contact extends Component {
         // Partially Mocked Payload
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.totalPrice,
-            customer: {
-                name: 'Dudu',
-                email: 'duduzinhu@gmail.com',
-                address: {
-                    street: 'Rua dos Bobos',
-                    zipCode: 123456,
-                    country: 'Brasil'
-                },
-                deliveryMethod: 'fastest'
-            }
+            price: this.props.totalPrice
         }
 
         burgerBuilderAPI.post('/orders.json', order)
@@ -45,6 +87,13 @@ class Contact extends Component {
             })
     }
     render() {
+        const formControls = Object.entries(this.state.orderForm).map(([controlKey, controlValue]) => {
+            return <Input key={controlKey}
+                          elementType={controlValue.elementType}
+                          elementConfig={controlValue.elementConfig}
+            />
+        });
+
         return (
             <Fragment>
                 {this.state.isLoading ?
@@ -56,10 +105,7 @@ class Contact extends Component {
                         </section>
                         <div className={ContactStyle.FormWrapper}>
                             <form onSubmit={this.handleFormSubmission}>
-                                <Input inputtype="input" type="text" name="name" placeholder="Name"/>
-                                <Input inputtype="input" type="email" name="email" placeholder="Email"/>
-                                <Input inputtype="input" type="text" name="street" placeholder="Street"/>
-                                <Input inputtype="input" type="text" name="postalCode" placeholder="Postal Code"/>
+                                { formControls }
                                 <Button type="Success" fillStyle="Full" classes={ContactStyle.OrderBtn}>
                                     Order Now!
                                 </Button>
@@ -73,3 +119,9 @@ class Contact extends Component {
 }
 
 export default withRouter(Contact);
+
+/*
+ * For using Forms with React we need to manually create the inputs a configure them. We can do this by using a config
+ * object and dynamically pass this configuration to the HTML inputs. In this example, the elementConfig are the
+ * HTML props that will be spread into the HTML input element.
+ */
