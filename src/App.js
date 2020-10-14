@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-
-import Counter from './containers/Counter/Counter';
+import React from 'react';
 import './App.css';
+import Persons from "./containers/Persons";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-       <Counter />
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <h1>Assignment 5: State Management with Redux</h1>
+      <hr />
+      <Persons />
+    </div>
+  );
 }
 
 export default App;

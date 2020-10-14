@@ -1,5 +1,5 @@
-# Redux Module
-This module will address how Redux implementation in React and how can it be used.
+# Assignment 5: Redux
 
-## Redux Flow
-![Redux Flow](./redux-flow.png?raw=true "Redux Flow")
+This is the project for the assignment 5 that uses Redux as a State Management.
+
+!["Redux Project"](./redux-project.png?raw=true )
