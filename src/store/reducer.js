@@ -4,6 +4,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type){
+    case 'INC_COUNTER':
+      return {
+        ...state,
+        counter: state.counter + 1
+      }
 
     default:
       return state;

@@ -30,7 +30,7 @@ class Counter extends Component {
         return (
             <div>
                 <CounterOutput value={this.props.ctr} />
-                <CounterControl label="Increment" clicked={() => this.counterChangedHandler( 'inc' )} />
+                <CounterControl label="Increment" clicked={() => this.props.onCounterIncrement()} />
                 <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
                 <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
                 <CounterControl label="Subtract 5" clicked={() => this.counterChangedHandler( 'sub', 5 )}  />
@@ -50,7 +50,19 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Counter);
+/*
+ * Similar to mapStateToProps, the Component doesn't have access to the Store object directly, we need to use a HOC
+ * provided by React Redux to give us the access through props. So similar to receiving the State as props, we can
+ * get the Dispatch (Store.dispatch) via props. This function will let us create Function Props that will hold
+ * the "dispatch" function from Store. So we can simply trigger it by "props.onCounterIncrement" for example.
+ */
+const mapDispatchToProps = dispatch => {
+    return {
+        onCounterIncrement: () => dispatch({ type: 'INC_COUNTER' })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 
 /* To connect Redux with a Component, we need to wrap it into Redux, so it can access the State and other Redux props.
  * This can be done with the react-redux function "connect()".
