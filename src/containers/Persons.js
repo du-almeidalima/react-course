@@ -5,31 +5,13 @@ import * as actionTypes from '../store/action';
 import Person from '../components/Person/Person';
 import AddPerson from '../components/AddPerson/AddPerson';
 
-const nameGenerator = function* (index = 1) {
-    while (true) {
-        switch (index % 3) {
-            case 0: yield 'Duduzinho';
-                break;
-            case 1: yield 'Juju';
-                break;
-            case 2: yield 'Nina';
-                break;
-            default: yield 'Unknown';
-        }
-
-        index = index + 1;
-    }
-}
-
 class Persons extends Component {
-    nameGeneratorFunc = nameGenerator();
-
-    personAddedHandler = () => {
+    personAddedHandler = (personForm) => {
 
         const newPerson = {
             id: Math.random(), // not really unique but good enough here!
-            name: this.nameGeneratorFunc.next().value,
-            age: Math.floor( Math.random() * 40 )
+            name: personForm.name,
+            age: personForm.age
         }
 
         this.props.onAddPerson(newPerson);
