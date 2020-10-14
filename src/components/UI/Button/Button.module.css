@@ -13,6 +13,8 @@
 
 .Btn:disabled {
     cursor: not-allowed;
+    background-color: lightgrey !important;
+    border-color: gray !important;
 }
 
 .Success {

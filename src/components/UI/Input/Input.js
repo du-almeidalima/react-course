@@ -2,12 +2,18 @@ import React from 'react';
 import InputStyle from './Input.module.css';
 
 const Input = props => {
-  let inputElement;
+  const controlClasses = [InputStyle.Input];
+
+  if (!props.valid && props.shouldValidate && props.touched) {
+    controlClasses.push(InputStyle.Invalid);
+  }
+
+  let control;
 
   switch (props.elementType) {
     case ('input'):
-      inputElement = (
-          <input className={InputStyle.Input}
+      control = (
+          <input className={controlClasses.join(' ')}
                  value={props.value}
                  onChange={props.changed}
                  {...props.elementConfig}
@@ -16,8 +22,8 @@ const Input = props => {
       break;
 
     case ('textarea'):
-      inputElement = (
-          <textarea className={InputStyle.Input}
+      control = (
+          <textarea className={controlClasses.join(' ')}
                     value={props.value}
                     onChange={props.changed}
                     {...props.elementConfig}
@@ -26,8 +32,8 @@ const Input = props => {
       break;
 
     case ('select'):
-      inputElement = (
-          <select className={InputStyle.Input} {...props.elementConfig} value={props.value} onChange={props.changed}>
+      control = (
+          <select className={controlClasses.join(' ')} {...props.elementConfig} value={props.value} onChange={props.changed}>
             {props.elementConfig.options.map(op => {
               return <option key={op.value} value={op.value}>{op.displayValue}</option>
             })}
@@ -36,8 +42,8 @@ const Input = props => {
       break;
 
     default:
-      inputElement = (
-          <input className={InputStyle.Input}
+      control = (
+          <input className={controlClasses.join(' ')}
                  value={props.value}
                  onChange={props.changed}
                  {...props.elementConfig}
@@ -50,7 +56,7 @@ const Input = props => {
         <label className={InputStyle.Label}>
           {props.label}
         </label>
-        {inputElement}
+        {control}
       </div>
   );
 };

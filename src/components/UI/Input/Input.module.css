@@ -16,6 +16,11 @@
   border-color: var(--success);
 }
 
+.Input.Invalid {
+  border-color: var(--error);
+  color: var(--error);
+}
+
 .Label {
   font-weight: bold;
   display: block;
