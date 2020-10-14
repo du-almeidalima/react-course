@@ -1,33 +1,49 @@
+import * as actionTypes from './actions';
+
 const initialState = {
-  counter: 0
+  counter: 0,
+  results: []
 }
 
 const reducer = (state = initialState, action) => {
   switch (action.type){
-    case 'INC_COUNTER':
+    case actionTypes.INC_COUNTER:
       return {
         ...state,
         counter: state.counter + 1
       }
 
-    case 'DEC_COUNTER':
+    case actionTypes.DEC_COUNTER:
       return {
         ...state,
         counter: state.counter - 1
       }
 
-    case 'ADD_COUNTER':
+    case actionTypes.ADD_COUNTER:
       return {
         ...state,
         counter: state.counter + action.payload
       }
 
-    case 'REMOVE_COUNTER':
+    case actionTypes.REMOVE_COUNTER:
       return {
         ...state,
         counter: state.counter - action.payload
       }
 
+    case actionTypes.STORE_RESULT:
+      return {
+        ...state,
+        results: state.results.concat(state.counter)
+      }
+
+    case actionTypes.DELETE_RESULT:
+      const updatedResults = state.results.filter(( _ , index) => index !== action.payload);
+
+      return {
+        ...state,
+        results: updatedResults
+      }
 
     default:
       return state;

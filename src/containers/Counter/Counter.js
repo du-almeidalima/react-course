@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
+import * as actionTypes from '../../store/actions';
 
 class Counter extends Component {
     state = {
@@ -34,6 +35,13 @@ class Counter extends Component {
                 <CounterControl label="Decrement" clicked={() => this.props.onCounterDecrement()}  />
                 <CounterControl label="Add 5" clicked={() => this.props.onCounterAdd(5)}  />
                 <CounterControl label="Subtract 5" clicked={() => this.props.onCounterRemove(5)}  />
+                <hr />
+                <button onClick={this.props.onStoreResult}>Store Result</button>
+                <ul>
+                    { this.props.storeResults.map((item, index) => (
+                        <li key={index} onClick={() => { this.props.onDeleteResult(index) }}>{item}</li>
+                    ))}
+                </ul>
             </div>
         );
     }
@@ -46,7 +54,8 @@ class Counter extends Component {
  */
 const mapStateToProps = state => {
     return {
-        ctr: state.counter
+        ctr: state.counter,
+        storeResults: state.results
     }
 }
 
@@ -58,10 +67,12 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
     return {
-        onCounterIncrement: () => dispatch({ type: 'INC_COUNTER' }),
-        onCounterDecrement: () => dispatch({ type: 'DEC_COUNTER' }),
-        onCounterAdd: (amount = 1) => dispatch({ type: 'ADD_COUNTER', payload: amount }),
-        onCounterRemove: (amount = 1) => dispatch({ type: 'REMOVE_COUNTER', payload: amount }),
+        onCounterIncrement: () => dispatch({ type: actionTypes.INC_COUNTER }),
+        onCounterDecrement: () => dispatch({ type: actionTypes.DEC_COUNTER }),
+        onCounterAdd: (amount = 1) => dispatch({ type: actionTypes.ADD_COUNTER, payload: amount }),
+        onCounterRemove: (amount = 1) => dispatch({ type: actionTypes.REMOVE_COUNTER, payload: amount }),
+        onStoreResult: () => dispatch({ type: actionTypes.STORE_RESULT }),
+        onDeleteResult: (elIndex) => dispatch({ type: actionTypes.DELETE_RESULT, payload: elIndex }),
     }
 }
 
