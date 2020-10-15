@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
-import * as actionTypes from '../../store/actions/actions';
+import { unionActions }  from '../../store/actions/index.actions';
 
 class Counter extends Component {
     state = {
@@ -50,12 +50,12 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
     return {
-        onCounterIncrement: () => dispatch(actionTypes.incrementCounter()),
-        onCounterDecrement: () => dispatch(actionTypes.decrementCounter()),
-        onCounterAdd: (amount = 1) => dispatch(actionTypes.addCounter(amount)),
-        onCounterRemove: (amount = 1) => dispatch(actionTypes.removeCounter(amount)),
-        onStoreResult: (result) => dispatch(actionTypes.storeResult(result)),
-        onDeleteResult: (elIndex) => dispatch(actionTypes.deleteResult(elIndex)),
+        onCounterIncrement: () => dispatch(unionActions.incrementCounter()),
+        onCounterDecrement: () => dispatch(unionActions.decrementCounter()),
+        onCounterAdd: (amount = 1) => dispatch(unionActions.addCounter(amount)),
+        onCounterRemove: (amount = 1) => dispatch(unionActions.removeCounter(amount)),
+        onStoreResult: (result) => dispatch(unionActions.storeResult(result)),
+        onDeleteResult: (elIndex) => dispatch(unionActions.deleteResult(elIndex)),
     }
 }
 
