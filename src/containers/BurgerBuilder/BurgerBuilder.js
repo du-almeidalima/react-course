@@ -44,13 +44,7 @@ class BurgerBuilder extends Component {
   }
 
   confirmPurchaseModalHandler = () => {
-    this.props.history.push({
-      pathname: '/checkout',
-      search: new URLSearchParams({
-        ...this.state.ingredients,
-        totalPrice: this.state.totalPrice.toString()
-      }).toString(),
-    });
+    this.props.history.push('/checkout');
   }
 
   // == TEMPLATE ==

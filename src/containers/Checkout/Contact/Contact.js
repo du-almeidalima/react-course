@@ -6,6 +6,7 @@ import burgerBuilderAPI from "../../../api/burger-builder.api";
 import Button from '../../../components/UI/Button/Button';
 import Input from "../../../components/UI/Input/Input";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import {connect} from "react-redux";
 
 class Contact extends Component {
     state = {
@@ -154,6 +155,7 @@ class Contact extends Component {
         // Showing Spinner
         this.setState({ isLoading: true });
 
+        // Mapping the form values
         const orderData = Object.entries(this.state.orderForm).reduce((acc, cur) => {
             return { ...acc, [cur[0]]: cur[1].value }
         }, {});
@@ -216,7 +218,15 @@ class Contact extends Component {
     }
 }
 
-export default withRouter(Contact);
+// == REDUX ==
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        totalPrice: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(Contact));
 
 /*
  * For using Forms with React we need to manually create the inputs a configure them. We can do this by using a config
