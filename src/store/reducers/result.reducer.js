@@ -6,7 +6,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type){
-    case actionTypes.STORE_RESULT:
+    case actionTypes.SAVE_RESULT:
       console.log(action)
       return {
         ...state,

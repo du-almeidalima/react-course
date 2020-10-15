@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import {Provider} from "react-redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
 
+import './index.css';
 import App from './App';
 import counterReducer from "./store/reducers/counter.reducer";
 import resultReducer from "./store/reducers/result.reducer";
@@ -34,11 +35,17 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // applyMiddleware is a StoreEnhancer, to user more than one StoreEnhance we need to use a function similar to
 // combineReducers
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(loggerMiddleware)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(loggerMiddleware, thunk)));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
 
 /*
  * The state now will be this object of the combined reducers. However, a reducer cannot access the state of the other
+ */
+
+/*
+ * REDUX THUNK: Redux thunk works somewhat as the loggerMiddleware, but what it does is that, it injects the dispatcher
+ * function into the action. This way, an action can execute async code, and dispatch another action with the result of
+ * the async operation.
  */
