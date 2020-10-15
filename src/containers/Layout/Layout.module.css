@@ -1,0 +1,18 @@
+.LayoutContainer {
+  width: 95%;
+  height: 100%;
+  margin: calc(55px + var(--padding)) auto 0 auto;
+}
+
+
+@media (min-width: 992px) {
+  .LayoutContainer {
+    width: 75%;
+  }
+}
+
+@media (min-width: 768px) {
+  .LayoutContainer {
+    width: 85%;
+  }
+}
