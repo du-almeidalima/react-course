@@ -7,7 +7,10 @@ export const DELETE_RESULT = 'DELETE_RESULT';
  * can dispatch another action
  */
 export const storeResult = (result) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    // Redux Thunk also inject the getState function from store into the returned function
+    console.log(getState());
+
     // Mock request
     setTimeout(() => {
       dispatch(saveResult(result))
