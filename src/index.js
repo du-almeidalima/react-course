@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import {Provider} from "react-redux";
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
@@ -14,6 +14,9 @@ const rootReducer = combineReducers({
   res: resultReducer
 });
 
+// This is a middleware, in Redux is a piece of code or a function that will receive the store, the dispatcher and
+// the action as arguments of nested functions. The middleware will not block the flow, it will just take those
+// parameters and use them.
 const loggerMiddleware = store => {
   // Dispatcher
   return next => {
@@ -25,9 +28,13 @@ const loggerMiddleware = store => {
     }
   }
 }
+// The compose function will work as a combineReducers but for StoreEnhancers.
+// __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ will automatically inject the StoreEnhancers for Redux DevTools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
-
+// applyMiddleware is a StoreEnhancer, to user more than one StoreEnhance we need to use a function similar to
+// combineReducers
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(loggerMiddleware)));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
