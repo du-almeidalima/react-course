@@ -14,13 +14,9 @@ const reducer = (state = initialState, action) => {
       }
 
     case actionTypes.PURCHASE_ORDER_SUCCESS: {
-      const newOrder = {
-        ...action.payload.order,
-        id: action.payload.id
-      }
       return {
         ...state,
-        orders: state.orders.concat(newOrder),
+        orders: state.orders.concat(action.payload),
         isLoading: false
       }
     }
@@ -34,7 +30,7 @@ const reducer = (state = initialState, action) => {
 
     default:
       return {
-        state
+        ...state
       }
   }
 }

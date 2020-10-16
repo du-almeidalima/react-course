@@ -11,10 +11,11 @@ export const purchaseOrder = (orderData) => {
 
     burgerBuilderAPI.post('/orders.json', orderData)
         .then(resp => {
-          console.log(resp)
-          dispatch(purchaseOrderSuccess())
+          const newOrder = { id: resp.data.name, order: orderData}
+          dispatch(purchaseOrderSuccess(newOrder))
         })
         .catch(err => {
+          console.log('Error', err)
           dispatch(purchaseOrderFail())
         })
   }
