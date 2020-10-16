@@ -1,12 +1,13 @@
 import React, {Component, Fragment} from 'react'
 import ContactStyle from './Contact.module.css';
-import {withRouter} from "react-router-dom";
 
 import burgerBuilderAPI from "../../../api/burger-builder.api";
 import Button from '../../../components/UI/Button/Button';
 import Input from "../../../components/UI/Input/Input";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { orderActions } from "../../../store/actions/actions";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 
 class Contact extends Component {
     state = {
@@ -152,31 +153,20 @@ class Contact extends Component {
             return false;
         }
 
-        // Showing Spinner
-        this.setState({ isLoading: true });
-
         // Mapping the form values
         const orderData = Object.entries(this.state.orderForm).reduce((acc, cur) => {
             return { ...acc, [cur[0]]: cur[1].value }
         }, {});
 
-        // Partially Mocked Payload
+        // Payload
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
             orderData
         }
 
-        burgerBuilderAPI.post('/orders.json', order)
-            .then(resp => {
-                console.log(resp);
-                this.props.history.push('/');
-            })
-            .catch(err => { console.error(err) })
-            .finally(() => {
-                // Hiding Spinner
-                this.setState({ isLoading: false, showPurchaseModal: false });
-            })
+        this.props.onPurchaseOrder(order)
+        // this.props.history.push('/');
     }
     render() {
         const formControls = Object.entries(this.state.orderForm).map(([controlKey, controlValue]) => {
@@ -192,7 +182,7 @@ class Contact extends Component {
 
         return (
             <Fragment>
-                {this.state.isLoading ?
+                {this.props.isLoading ?
                     <Spinner /> :
                     <div className={ContactStyle.ContactWrapper}>
                         <section className={ContactStyle.Title}>
@@ -221,12 +211,19 @@ class Contact extends Component {
 // == REDUX ==
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        ingredients: state.burgerBuilder.ingredients,
+        totalPrice: state.burgerBuilder.totalPrice,
+        isLoading: state.order.isLoading
     }
 }
 
-export default connect(mapStateToProps)(withRouter(Contact));
+const mapDispatchToProps = dispatch => {
+    return {
+        onPurchaseOrder: (orderData) => dispatch(orderActions.purchaseOrder(orderData))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Contact, burgerBuilderAPI));
 
 /*
  * For using Forms with React we need to manually create the inputs a configure them. We can do this by using a config
