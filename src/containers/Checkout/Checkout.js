@@ -7,11 +7,12 @@ import Contact from './Contact/Contact';
 
 class Checkout extends Component {
   render() {
-    let content = <Redirect to="/"/>;
+    let content = <Redirect to="/" />;
 
     if (Object.keys(this.props.ingredients).length > 0) {
       content = (
           <div>
+            { this.props.purchased ? <Redirect to="/" /> : null }
             <h1 className="PageTitle">Checkout</h1>
             <CheckoutSummary ingredients={this.props.ingredients}/>
             <Route path={this.props.match.path + '/contact'} component={Contact}/>
@@ -26,7 +27,8 @@ class Checkout extends Component {
 // == REDUX ==
 const mapStateToProps = state => {
   return {
-    ingredients: state.burgerBuilder.ingredients
+    ingredients: state.burgerBuilder.ingredients,
+    purchased: state.order.purchased
   }
 }
 

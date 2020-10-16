@@ -1,5 +1,6 @@
 import burgerBuilderAPI from "../../api/burger-builder.api";
 
+export const PURCHASE_ORDER_INIT = 'PURCHASE_ORDER_INIT';
 export const PURCHASE_ORDER_SUCCESS = 'PURCHASE_ORDER_SUCCESS';
 export const PURCHASE_ORDER_FAIL = 'PURCHASE_ORDER_FAIL';
 export const PURCHASE_ORDER_START = 'PURCHASE_ORDER_START';
@@ -18,6 +19,13 @@ export const purchaseOrder = (orderData) => {
           console.log('Error', err)
           dispatch(purchaseOrderFail())
         })
+  }
+}
+
+// This function purpose is to set purchased to false so the user don't get redirected on Checkout
+export const purchaseOrderInit = () => {
+  return {
+    type: PURCHASE_ORDER_INIT
   }
 }
 

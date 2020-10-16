@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 
-import { burgerBuilderActions } from '../../store/actions/actions';
+import { burgerBuilderActions, orderActions } from '../../store/actions/actions';
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
@@ -19,15 +19,6 @@ class BurgerBuilder extends Component {
 
   // == LIFECYCLE ==
   componentDidMount() {
-    // burgerBuilderAPI.get('/ingredients.json')
-    //   .then(res => {
-    //     console.log(res);
-    //     this.setState({ ingredients: res.data });
-    //   })
-    //   .catch( err => {
-    //     console.error('[BurgerBuilder]: ', err);
-    //     this.setState({ error: true })
-    //   });
     this.props.onFetchIngredients();
   }
 
@@ -45,6 +36,8 @@ class BurgerBuilder extends Component {
   }
 
   confirmPurchaseModalHandler = () => {
+    // Set 'purchased' to false so User don't get redirected after placing an order
+    this.props.onPurchaseInit();
     this.props.history.push('/checkout');
   }
 
@@ -108,7 +101,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: (ingredientKey) => dispatch(burgerBuilderActions.addIngredient(ingredientKey)),
     onIngredientRemoved: (ingredientKey) => dispatch(burgerBuilderActions.removeIngredient(ingredientKey)),
-    onFetchIngredients: () => dispatch(burgerBuilderActions.fetchIngredients())
+    onFetchIngredients: () => dispatch(burgerBuilderActions.fetchIngredients()),
+    onPurchaseInit: () => { dispatch(orderActions.purchaseOrderInit()) }
   }
 }
 
