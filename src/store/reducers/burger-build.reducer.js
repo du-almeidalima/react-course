@@ -8,13 +8,9 @@ const INGREDIENTS_PRICE = new Map([
 ]);
 
 const initialState = {
-  ingredients: {
-    salad: 0,
-    bacon: 0,
-    meat: 0,
-    cheese: 0
-  },
-  totalPrice: 4
+  ingredients: {},
+  totalPrice: 4,
+  error: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -41,11 +37,30 @@ const reducer = (state = initialState, action) => {
         updatedIngredients[action.payload] = 0;
       }
 
-
       return {
         ...state,
         ingredients: updatedIngredients,
         totalPrice
+      }
+
+    case actionTypes.SET_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: {
+          salad: action.payload.salad,
+          bacon: action.payload.bacon,
+          cheese: action.payload.cheese,
+          meat: action.payload.bacon,
+        },
+        error: false
+      }
+
+    case actionTypes.FETCH_INGREDIENTS_ERROR:
+      return {
+        ...state,
+        ingredients: 0,
+        totalPrice: 0,
+        error: true
       }
 
     default:

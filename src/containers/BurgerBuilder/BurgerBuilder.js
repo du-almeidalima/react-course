@@ -19,15 +19,16 @@ class BurgerBuilder extends Component {
 
   // == LIFECYCLE ==
   componentDidMount() {
-    burgerBuilderAPI.get('/ingredients.json')
-      .then(res => {
-        console.log(res);
-        this.setState({ ingredients: res.data });
-      })
-      .catch( err => {
-        console.error('[BurgerBuilder]: ', err);
-        this.setState({ error: true })
-      });
+    // burgerBuilderAPI.get('/ingredients.json')
+    //   .then(res => {
+    //     console.log(res);
+    //     this.setState({ ingredients: res.data });
+    //   })
+    //   .catch( err => {
+    //     console.error('[BurgerBuilder]: ', err);
+    //     this.setState({ error: true })
+    //   });
+    this.props.onFetchIngredients();
   }
 
   // == METHODS ==
@@ -62,7 +63,7 @@ class BurgerBuilder extends Component {
     return (
       <Fragment>
         {
-          this.state.ingredients
+          this.props.ingredients
           ? <Fragment>
               <Modal show={this.state.showPurchaseModal} modalClosed={this.closePurchaseModalHandler}>
                 { this.state.isLoading
@@ -77,7 +78,7 @@ class BurgerBuilder extends Component {
               </Modal>
               <Burger ingredients={this.props.ingredients} />
             </Fragment>
-          : this.state.error 
+          : this.props.error
             ? <h2 style={{textAlign: "center", color: 'red'}}>Something went wrong!</h2>
             : <Spinner />
         }
@@ -98,14 +99,16 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
-    totalPrice: state.burgerBuilder.totalPrice
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: (ingredientKey) => dispatch(burgerBuilderActions.addIngredient(ingredientKey)),
-    onIngredientRemoved: (ingredientKey) => dispatch(burgerBuilderActions.removeIngredient(ingredientKey))
+    onIngredientRemoved: (ingredientKey) => dispatch(burgerBuilderActions.removeIngredient(ingredientKey)),
+    onFetchIngredients: () => dispatch(burgerBuilderActions.fetchIngredients())
   }
 }
 
