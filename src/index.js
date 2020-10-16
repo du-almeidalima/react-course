@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import {combineReducers, createStore} from "redux";
 import * as serviceWorker from './serviceWorker';
-import reducer from "./store/burger-build.reducer";
+import burgerBuilderReducer from "./store/reducers/burger-build.reducer";
 
 import './index.css';
 import App from './App';
 
+const combinedReducers = combineReducers({
+  burgerBuilder: burgerBuilderReducer
+});
+
 const store = createStore(
-    reducer,
+    combinedReducers,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

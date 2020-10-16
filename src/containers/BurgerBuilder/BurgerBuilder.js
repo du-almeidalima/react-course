@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 
-import * as actionTypes from '../../store/burger-build.action';
+import { burgerBuilderActions } from '../../store/actions/actions';
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
@@ -97,15 +97,15 @@ class BurgerBuilder extends Component {
 // == REDUX ==
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: (ingredientKey) => dispatch({ type: actionTypes.ADD_INGREDIENT, payload: ingredientKey }),
-    onIngredientRemoved: (ingredientKey) => dispatch({ type: actionTypes.REMOVE_INGREDIENT, payload: ingredientKey })
+    onIngredientAdded: (ingredientKey) => dispatch(burgerBuilderActions.addIngredient(ingredientKey)),
+    onIngredientRemoved: (ingredientKey) => dispatch(burgerBuilderActions.removeIngredient(ingredientKey))
   }
 }
 

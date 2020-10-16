@@ -1,4 +1,4 @@
-import * as actionTypes from './burger-build.action';
+import * as actionTypes from '../actions/burger-build.action';
 
 const INGREDIENTS_PRICE = new Map([
   ["salad", 0.5],
