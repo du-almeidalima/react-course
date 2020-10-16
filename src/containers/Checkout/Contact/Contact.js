@@ -113,6 +113,7 @@ class Contact extends Component {
         return isValid;
     }
 
+    // Loop through form controls to check if any is invalid making the form invalid
     validateForm = (updatedForm) => {
         return Object.values(updatedForm).reduce((acc, cur) => {
             if (acc) {
@@ -168,6 +169,7 @@ class Contact extends Component {
         this.props.onPurchaseOrder(order)
         // this.props.history.push('/');
     }
+
     render() {
         const formControls = Object.entries(this.state.orderForm).map(([controlKey, controlValue]) => {
             return <Input key={controlKey}

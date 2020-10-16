@@ -2,7 +2,7 @@ import React from 'react';
 import InputStyle from './Input.module.css';
 
 const Input = props => {
-  const controlClasses = [InputStyle.Input];
+  const controlClasses = [InputStyle.Input, props.classes];
 
   if (!props.valid && props.shouldValidate && props.touched) {
     controlClasses.push(InputStyle.Invalid);

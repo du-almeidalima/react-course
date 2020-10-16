@@ -1,0 +1,23 @@
+.FormWrapper {
+  padding: calc(2 * var(--padding));
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid rgb(170, 170, 170);
+  border-radius: var(--border-radius);
+  margin: var(--padding) auto;
+  width: 100%;
+}
+
+.FormWrapper .Control {
+  margin-bottom: calc(3 * var(--padding));
+}
+
+.LoginBtn {
+  display: block;
+  margin: var(--padding) auto 0 auto;
+}
+
+@media (min-width: 768px) {
+  .FormWrapper {
+      width: 30%;
+  }
+}
