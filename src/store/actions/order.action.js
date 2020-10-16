@@ -5,6 +5,13 @@ export const PURCHASE_ORDER_SUCCESS = 'PURCHASE_ORDER_SUCCESS';
 export const PURCHASE_ORDER_FAIL = 'PURCHASE_ORDER_FAIL';
 export const PURCHASE_ORDER_START = 'PURCHASE_ORDER_START';
 
+export const FETCH_ORDERS_START = 'FETCH_ORDERS_START';
+export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
+export const FETCH_ORDERS_FAIL = 'FETCH_ORDERS_FAIL';
+
+// ======================================
+// ======= PURCHASE ORDER ACTIONS =======
+// ======================================
 export const purchaseOrder = (orderData) => {
   return dispatch => {
     // Dispatching Sync Action to Update UI Loading State
@@ -12,7 +19,7 @@ export const purchaseOrder = (orderData) => {
 
     burgerBuilderAPI.post('/orders.json', orderData)
         .then(resp => {
-          const newOrder = { id: resp.data.name, order: orderData}
+          const newOrder = {id: resp.data.name, order: orderData}
           dispatch(purchaseOrderSuccess(newOrder))
         })
         .catch(err => {
@@ -46,5 +53,50 @@ const purchaseOrderSuccess = (orderRes) => {
 const purchaseOrderFail = () => {
   return {
     type: PURCHASE_ORDER_FAIL
+  }
+}
+
+// ======================================
+// ======== FETCH ORDER ACTIONS =========
+// ======================================
+
+export const fetchOrders = () => {
+  return dispatch => {
+    dispatch(fetchOrdersStart());
+
+    burgerBuilderAPI.get("/orders.json")
+        .then((res) => {
+          // FireBase return a Object with all the items, so we need to turn it into an array
+          const ordersArr = Object.entries(res.data).map(([key, value]) => {
+            return {
+              ...value,
+              id: key
+            }
+          });
+          dispatch(fetchOrdersSuccess(ordersArr))
+        })
+        .catch((err) => {
+          console.error("[Orders]: ", err);
+          dispatch(fetchOrdersFail())
+        });
+  }
+}
+
+const fetchOrdersStart = () => {
+  return {
+    type: FETCH_ORDERS_START
+  }
+}
+
+const fetchOrdersSuccess = (orders) => {
+  return {
+    type: FETCH_ORDERS_SUCCESS,
+    payload: orders
+  }
+}
+
+const fetchOrdersFail = () => {
+  return {
+    type: FETCH_ORDERS_FAIL
   }
 }

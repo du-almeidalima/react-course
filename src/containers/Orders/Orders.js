@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import Order from "../../components/Order/Order";
 import burgerBuilderAPI from "../../api/burger-builder.api";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import {orderActions} from "../../store/actions/actions";
 
 class Orders extends Component {
   state = {
@@ -10,30 +13,14 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    burgerBuilderAPI.get("/orders.json")
-      .then((res) => {
-        // FireBase return a Object with all the items, so we need to turn it into an array
-        const ordersArr = Object.entries(res.data)
-          .map(([key, value]) => {
-            return {
-              ...value,
-              id: key
-            }
-          });
-
-        this.setState({ orders: ordersArr });
-      })
-      .catch((err) => {
-        console.error("[Orders]: ", err);
-        this.setState({ error: true });
-      });
+    this.props.onFetchOrders();
   }
 
   render() {
     return (
       <div>
         <h1 className="PageTitle">Orders</h1>
-        { this.state.orders.map(order => (
+        { this.props.orders.map(order => (
           <Order key={order.id} ingredients={order.ingredients} price={+order.price}/>
         ))}
       </div>
@@ -41,4 +28,18 @@ class Orders extends Component {
   }
 }
 
-export default withErrorHandler(Orders, burgerBuilderAPI);
+// == REDUX ==
+const mapStateToProps = (state) => {
+  return {
+    orders: state.order.orders,
+    isLoading: state.order.isLoading
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchOrders: () => { dispatch(orderActions.fetchOrders()) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, burgerBuilderAPI));
