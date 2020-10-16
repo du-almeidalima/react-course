@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
-import {combineReducers, createStore} from "redux";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import * as serviceWorker from './serviceWorker';
 import burgerBuilderReducer from "./store/reducers/burger-build.reducer";
+import thunk from "redux-thunk";
 
 import './index.css';
 import App from './App';
@@ -12,10 +13,10 @@ const combinedReducers = combineReducers({
   burgerBuilder: burgerBuilderReducer
 });
 
-const store = createStore(
-    combinedReducers,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(combinedReducers, composeEnhancers(
+    applyMiddleware(thunk)
+));
 
 ReactDOM.render(
     <React.StrictMode>
