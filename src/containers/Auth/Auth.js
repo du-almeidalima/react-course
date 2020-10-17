@@ -41,6 +41,7 @@ class Auth extends Component {
       },
     },
     formValid: false,
+    type: 'signIn'
   };
 
   validateControl = (value, rules) => {
@@ -112,7 +113,13 @@ class Auth extends Component {
       password: this.state.controls.password.value,
     }
 
-    this.props.onAuth(userData);
+    this.props.onAuth(userData, this.state.type);
+  }
+
+  handleSwitchAuthType = () => {
+    this.setState((previousState) => {
+      return { type: previousState.type === 'signIn' ? 'signUp' : 'signIn' }
+    })
   }
 
   render() {
@@ -138,9 +145,14 @@ class Auth extends Component {
         <div className={AuthStyle.FormWrapper}>
           <form noValidate onSubmit={this.handleFormSubmission}>
             {formControls}
-            <Button classes={AuthStyle.LoginBtn} type="Success" fillStyle="Full" disabled={!this.state.formValid}>
-              Sign In
-            </Button>
+            <div className={AuthStyle.ActionWrapper}>
+              <Button classes={AuthStyle.SwitchAuthType} onClick={this.handleSwitchAuthType} type="button">
+                Switch to {this.state.type === 'signIn' ? 'Sign Up' : 'Sign In'}
+              </Button>
+              <Button classes={AuthStyle.LoginBtn} btnType="Success" fillStyle="Full" disabled={!this.state.formValid}>
+                {this.state.type === 'signIn' ? 'Sign In' : 'Sign Up'}
+              </Button>
+            </div>
           </form>
         </div>
       </Fragment>
@@ -151,7 +163,7 @@ class Auth extends Component {
 // == REDUX ==
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (userData) => { dispatch(authActions.auth(userData)) }
+    onAuth: (userData, authType) => { dispatch(authActions.auth(userData, authType)) }
   }
 }
 

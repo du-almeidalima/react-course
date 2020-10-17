@@ -22,14 +22,14 @@ const button = props => {
     // Properties of this component and not from the HTMLButtonComponent
     const buttonProps = {
         fillStyle: props.fillStyle,
-        type: props.type,
+        btnType: props.btnType,
         children: props.children,
         styles: props.styles,
         classes: props.classes
     }
 
     const btnFillStyle = buttonProps.fillStyle ? buttonProps.fillStyle : null;
-    const classes = [ButtonStyle.Btn, ButtonStyle[buttonProps.type], ButtonStyle[btnFillStyle]].join(' ');
+    const classes = [ButtonStyle.Btn, ButtonStyle[buttonProps.btnType], ButtonStyle[btnFillStyle]].join(' ');
     const customClasses = props.classes ? buttonProps.classes : null;
     const nativeButtonHtmlProps = extractCustomProps(props, buttonProps);
 

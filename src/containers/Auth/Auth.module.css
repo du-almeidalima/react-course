@@ -11,13 +11,32 @@
   margin-bottom: calc(3 * var(--padding));
 }
 
-.LoginBtn {
-  display: block;
-  margin: var(--padding) auto 0 auto;
+.ActionWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ActionWrapper > .LoginBtn {
+  align-self: center;
+  display: inline-block;
+}
+
+.ActionWrapper > .SwitchAuthType {
+  display: inline-block;
+  color: dodgerblue;
 }
 
 @media (min-width: 768px) {
   .FormWrapper {
-      width: 30%;
+      width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .ActionWrapper {
+    flex-flow: column;
+  }
+  .ActionWrapper > * {
+    width: 100%;
   }
 }
