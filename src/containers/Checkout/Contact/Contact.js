@@ -167,7 +167,6 @@ class Contact extends Component {
         }
 
         this.props.onPurchaseOrder(order)
-        // this.props.history.push('/');
     }
 
     render() {

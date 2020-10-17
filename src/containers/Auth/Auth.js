@@ -108,8 +108,8 @@ class Auth extends Component {
     }
 
     const userData = {
-      email: this.state.controls.email,
-      password: this.state.controls.password,
+      email: this.state.controls.email.value,
+      password: this.state.controls.password.value,
     }
 
     this.props.onAuth(userData);
