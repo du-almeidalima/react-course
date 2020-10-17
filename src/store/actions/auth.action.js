@@ -21,8 +21,8 @@ export const auth = (userData, authType) => {
       returnSecureToken: true
     })
       .then(res => {
-        console.log(res)
-        dispatch(authSuccess())
+        const { idToken, localId } = res.data;
+        dispatch(authSuccess({ token: idToken, userId: localId }));
       })
       .catch(err => {
         console.error(err);
