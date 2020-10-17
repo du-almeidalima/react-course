@@ -19,7 +19,7 @@ export const purchaseOrder = (orderData) => {
 
     burgerBuilderAPI.post('/orders.json', orderData)
         .then(resp => {
-          const newOrder = {id: resp.data.name, order: orderData}
+          const newOrder = {id: resp.data.name, ...orderData }
           dispatch(purchaseOrderSuccess(newOrder))
         })
         .catch(err => {

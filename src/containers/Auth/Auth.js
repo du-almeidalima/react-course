@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from "react";
+import { connect } from 'react-redux';
 
 import * as AuthStyle from './Auth.module.css';
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
+import { authActions } from "../../store/actions/actions";
 
-export default class Auth extends Component {
+class Auth extends Component {
   state = {
     controls: {
       email: {
@@ -97,6 +99,22 @@ export default class Auth extends Component {
     this.setState({ controls: updatedControls, formValid });
   }
 
+  handleFormSubmission = (e) => {
+    e.preventDefault();
+
+    // Prevent submission on form invalid
+    if (!this.state.formValid) {
+      return false;
+    }
+
+    const userData = {
+      email: this.state.controls.email,
+      password: this.state.controls.password,
+    }
+
+    this.props.onAuth(userData);
+  }
+
   render() {
     const formControls = Object.entries(this.state.controls).map(
       ([controlKey, controlValue]) => {
@@ -118,7 +136,7 @@ export default class Auth extends Component {
       <Fragment>
         <h1 className="PageTitle">Login</h1>
         <div className={AuthStyle.FormWrapper}>
-          <form noValidate>
+          <form noValidate onSubmit={this.handleFormSubmission}>
             {formControls}
             <Button classes={AuthStyle.LoginBtn} type="Success" fillStyle="Full" disabled={!this.state.formValid}>
               Sign In
@@ -129,3 +147,12 @@ export default class Auth extends Component {
     );
   }
 }
+
+// == REDUX ==
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (userData) => { dispatch(authActions.auth(userData)) }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Auth);
