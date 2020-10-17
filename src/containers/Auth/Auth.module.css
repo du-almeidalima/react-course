@@ -26,6 +26,14 @@
   color: dodgerblue;
 }
 
+.Error {
+  padding: var(--padding);
+  background-color: var(--light-error);
+  color: var(--error);
+  border: 1px solid var(--error);
+  border-radius: var(--border-radius);
+}
+
 @media (min-width: 768px) {
   .FormWrapper {
       width: 50%;

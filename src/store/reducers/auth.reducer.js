@@ -5,14 +5,14 @@ const initialState = {
   token: null,
   userId: null,
   error: null,
-  loading: false
+  isLoading: false
 }
 
 // Reducer Helpers
 const authSuccess = (state, action) => {
   return updateStateObject(state, {
     error: null,
-    loading: false,
+    isLoading: false,
     token: action.payload.token,
     userId: action.payload.userId
   });
@@ -21,7 +21,7 @@ const authSuccess = (state, action) => {
 const authError = (state, action) => {
   return updateStateObject(state, {
     error: action.payload,
-    loading: false,
+    isLoading: false,
     token: null,
     userId: null
   });
@@ -30,7 +30,7 @@ const authError = (state, action) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
-      return updateStateObject(state, { error: null, loading: true });
+      return updateStateObject(state, { error: null, isLoading: true });
     case actionTypes.AUTH_SUCCESS:
       return authSuccess(state, action);
     case actionTypes.AUTH_FAIL:

@@ -26,7 +26,7 @@ export const auth = (userData, authType) => {
       })
       .catch(err => {
         console.error(err);
-        dispatch(authSuccess());
+        dispatch(authFail(err));
       })
   }
 }

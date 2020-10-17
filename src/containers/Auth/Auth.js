@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as AuthStyle from './Auth.module.css';
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { authActions } from "../../store/actions/actions";
 
 class Auth extends Component {
@@ -139,21 +140,32 @@ class Auth extends Component {
       }
     );
 
+    const errorMessage = this.props.error
+      ? <div className={AuthStyle.Error}>
+        { this.props.error.message }
+      </div>
+      : null;
+
     return (
       <Fragment>
         <h1 className="PageTitle">Login</h1>
         <div className={AuthStyle.FormWrapper}>
-          <form noValidate onSubmit={this.handleFormSubmission}>
-            {formControls}
-            <div className={AuthStyle.ActionWrapper}>
-              <Button classes={AuthStyle.SwitchAuthType} onClick={this.handleSwitchAuthType} type="button">
-                Switch to {this.state.type === 'signIn' ? 'Sign Up' : 'Sign In'}
-              </Button>
-              <Button classes={AuthStyle.LoginBtn} btnType="Success" fillStyle="Full" disabled={!this.state.formValid}>
-                {this.state.type === 'signIn' ? 'Sign In' : 'Sign Up'}
-              </Button>
-            </div>
-          </form>
+          {this.props.isLoading
+            ? <Spinner />
+            : <form noValidate onSubmit={this.handleFormSubmission}>
+                {formControls}
+                <div className={AuthStyle.ActionWrapper}>
+                  {/* Error Message */}
+                  {errorMessage}
+                  <Button classes={AuthStyle.SwitchAuthType} onClick={this.handleSwitchAuthType} type="button">
+                    Switch to {this.state.type === 'signIn' ? 'Sign Up' : 'Sign In'}
+                  </Button>
+                  <Button classes={AuthStyle.LoginBtn} btnType="Success" fillStyle="Full" disabled={!this.state.formValid}>
+                    {this.state.type === 'signIn' ? 'Sign In' : 'Sign Up'}
+                  </Button>
+                </div>
+            </form>
+          }
         </div>
       </Fragment>
     );
@@ -167,4 +179,11 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.auth.isLoading,
+    error: state.auth.error
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
