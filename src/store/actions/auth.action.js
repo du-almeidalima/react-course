@@ -10,7 +10,7 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 
-export const auth = (userData, authType) => {
+export const auth = (userData, authType, history) => {
   return dispatch => {
     // Update UI Loading
     dispatch(authStart());
@@ -33,6 +33,7 @@ export const auth = (userData, authType) => {
 
         dispatch(startLogoutCountdown(expiresIn))
         dispatch(authSuccess({ token: idToken, userId: localId }));
+        history.push('/');
       })
       .catch(err => {
         console.error(err);

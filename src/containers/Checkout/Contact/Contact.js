@@ -5,9 +5,10 @@ import burgerBuilderAPI from "../../../api/burger-builder.api";
 import Button from '../../../components/UI/Button/Button';
 import Input from "../../../components/UI/Input/Input";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import { orderActions } from "../../../store/actions/actions";
-import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import { checkValidity } from '../../../shared/util';
 
 class Contact extends Component {
     state = {
@@ -93,26 +94,6 @@ class Contact extends Component {
         isLoading: false
     }
 
-    validateControl = (value, rules) => {
-        let isValid = true;
-
-        // No Rules
-        if (rules === undefined) {
-            return isValid
-        }
-
-        // Is Required
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if (rules.length) {
-            isValid = value.length === rules.length && isValid;
-        }
-
-        return isValid;
-    }
-
     // Loop through form controls to check if any is invalid making the form invalid
     validateForm = (updatedForm) => {
         return Object.values(updatedForm).reduce((acc, cur) => {
@@ -131,7 +112,7 @@ class Contact extends Component {
         const updatedOrderForm = { ...this.state.orderForm }
 
         // Validation the control against its validationRules
-        const isControlValid = this.validateControl(value, updatedOrderForm[controlKey].validationRules);
+        const isControlValid = checkValidity(value, updatedOrderForm[controlKey].validationRules);
 
         updatedOrderForm[controlKey] = {
             ...updatedOrderForm[controlKey],
