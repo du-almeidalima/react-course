@@ -64,8 +64,10 @@ const purchaseOrderFail = () => {
 export const fetchOrders = () => {
   return (dispatch, getState) => {
     const token = getState().auth?.token;
+    const userId = getState().auth.userId;
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
     dispatch(fetchOrdersStart());
-    burgerBuilderAPI.get("/orders.json?auth=" + token)
+    burgerBuilderAPI.get("/orders.json" + queryParams)
         .then((res) => {
           // FireBase return a Object with all the items, so we need to turn it into an array
           const ordersArr = Object.entries(res.data).map(([key, value]) => {
