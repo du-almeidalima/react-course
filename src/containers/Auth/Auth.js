@@ -6,7 +6,8 @@ import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { authActions } from "../../store/actions/actions";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { checkValidity } from "../../shared/util";
 
 class Auth extends Component {
   state = {
@@ -50,31 +51,7 @@ class Auth extends Component {
     this.props.onSetAuthRedirectPath('/');
   }
 
-  validateControl = (value, rules) => {
-    let isValid = true;
 
-    // No Rules
-    if (rules === undefined) {
-      return isValid
-    }
-
-    // Is Required
-    if (rules.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-
-    // Exact Length
-    if (rules.length) {
-      isValid = value.length === rules.length && isValid;
-    }
-
-    // Min Length
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    return isValid;
-  }
 
   // Loop through form controls to check if any is invalid making the form invalid
   validateForm = (updatedForm) => {
@@ -96,7 +73,7 @@ class Auth extends Component {
       [controlKey]: {
         ...this.state.controls[controlKey],
         value: value,
-        valid: this.validateControl(value, this.state.controls[controlKey].validationRules),
+        valid: checkValidity(value, this.state.controls[controlKey].validationRules),
         touched: true
       }
     }
@@ -119,7 +96,7 @@ class Auth extends Component {
       password: this.state.controls.password.value,
     }
 
-    this.props.onAuth(userData, this.state.type);
+    this.props.onAuth(userData, this.state.type, this.props.history);
   }
 
   handleSwitchAuthType = () => {
@@ -153,16 +130,15 @@ class Auth extends Component {
 
     return (
       <Fragment>
-        { this.props.isAuth ? <Redirect to={this.props.authRedirectPath} /> : null}
         <h1 className="PageTitle">Login</h1>
         <div className={AuthStyle.FormWrapper}>
           {this.props.isLoading
             ? <Spinner />
             : <form noValidate onSubmit={this.handleFormSubmission}>
                 {formControls}
+                {/* Error Message */}
+                {errorMessage}
                 <div className={AuthStyle.ActionWrapper}>
-                  {/* Error Message */}
-                  {errorMessage}
                   <Button classes={AuthStyle.SwitchAuthType} onClick={this.handleSwitchAuthType} type="button">
                     Switch to {this.state.type === 'signIn' ? 'Sign Up' : 'Sign In'}
                   </Button>
@@ -181,7 +157,7 @@ class Auth extends Component {
 // == REDUX ==
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (userData, authType) => { dispatch(authActions.auth(userData, authType)) },
+    onAuth: (userData, authType, history) => { dispatch(authActions.auth(userData, authType, history)) },
     onSetAuthRedirectPath: path => { dispatch(authActions.setAuthRedirectPath(path)) }
   }
 }
@@ -195,4 +171,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Auth));

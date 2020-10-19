@@ -10,7 +10,7 @@ const withErrorHandler = (WrappedComponent, axiosInstance) => {
     };
 
     // == LIFECYCLE ==
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
       // This is going to set this callback function to the AxiosInterceptor Reference passed as parameter
       if (axiosInstance) {
         this.resInterceptor = axiosInstance.interceptors.response.use(

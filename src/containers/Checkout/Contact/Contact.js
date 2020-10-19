@@ -128,12 +128,11 @@ class Contact extends Component {
         const value = e.target.value;
 
         // The state needs to be treated immutably, so for each level of object nesting we need to create a shallow copy
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        }
+        const updatedOrderForm = { ...this.state.orderForm }
 
         // Validation the control against its validationRules
         const isControlValid = this.validateControl(value, updatedOrderForm[controlKey].validationRules);
+
         updatedOrderForm[controlKey] = {
             ...updatedOrderForm[controlKey],
             value: value,

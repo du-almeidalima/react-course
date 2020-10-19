@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
@@ -12,9 +12,10 @@ import {authActions} from "./store/actions/actions";
 
 function App(props) {
 
-  props.onAuthAutoLogin();
+  const onAuthAutoLogin = props.onAuthAutoLogin;
 
-  console.log(props.isAuth)
+  useEffect(onAuthAutoLogin, []);
+
   return (
     <BrowserRouter>
       <Layout>

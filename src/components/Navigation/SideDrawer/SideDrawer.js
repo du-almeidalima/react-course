@@ -14,7 +14,7 @@ const sideDrawer = (props) => {
           <Logo classes={SideDrawerStyle.Logo} />
         </div>
         <nav>
-          <NavigationItems isAuth={props.isAuth} />
+          <NavigationItems isAuth={props.isAuth} clickHandler={props.close} />
         </nav>
       </div>
     </Fragment>
