@@ -7,6 +7,7 @@ const SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWi
 export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const auth = (userData, authType) => {
   return dispatch => {
@@ -21,13 +22,28 @@ export const auth = (userData, authType) => {
       returnSecureToken: true
     })
       .then(res => {
-        const { idToken, localId } = res.data;
+        const { idToken, localId, expiresIn } = res.data;
+        dispatch(startLogoutCountdown(expiresIn))
         dispatch(authSuccess({ token: idToken, userId: localId }));
       })
       .catch(err => {
         console.error(err);
         dispatch(authFail(err));
       })
+  }
+}
+
+const startLogoutCountdown = (expiresIn) => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(authLogout())
+    }, expiresIn * 1000)
+  };
+}
+
+const authLogout = () => {
+  return {
+    type: AUTH_LOGOUT
   }
 }
 
