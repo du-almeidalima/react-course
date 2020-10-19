@@ -33,8 +33,8 @@ const orderSummary = props => {
                 <span>{props.totalPrice.toFixed(2)}$</span>
             </div>
             <div className={OrderSummaryStyle.ActionWrapper}>
-                <Button type="Danger" fillStyle="Outline" onClick={props.cancelled} styles={{marginRight: '10px'}}>Cancel</Button>
-                <Button type="Success" fillStyle="Full" onClick={props.confirmed}>Continue</Button>
+                <Button btnType="Danger" fillStyle="Outline" onClick={props.cancelled} styles={{marginRight: '10px'}}>Cancel</Button>
+                <Button btnType="Success" fillStyle="Full" onClick={props.confirmed}>Continue</Button>
             </div>
         </Fragment>
     )

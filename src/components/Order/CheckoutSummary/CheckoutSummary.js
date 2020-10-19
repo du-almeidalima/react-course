@@ -18,11 +18,11 @@ class CheckoutSummary extends Component {
         return (
             <div className={CheckoutSummaryStyle.CheckoutSummaryWrapper}>
                 <div className={CheckoutSummaryStyle.TitleHeader}>
-                    <Button classes={CheckoutSummaryStyle.Cancel} type="Danger" fillStyle="Outline" onClick={this.cancelHandler}>
+                    <Button classes={CheckoutSummaryStyle.Cancel} btnType="Danger" fillStyle="Outline" onClick={this.cancelHandler}>
                         Cancel
                     </Button>
                     <h2 className={CheckoutSummaryStyle.Title}>Are we done with this master piece?</h2>
-                    <Button classes={CheckoutSummaryStyle.Continue} type="Success" fillStyle="Full" onClick={this.continueHandler}>
+                    <Button classes={CheckoutSummaryStyle.Continue} btnType="Success" fillStyle="Full" onClick={this.continueHandler}>
                         Continue
                     </Button>
                 </div>

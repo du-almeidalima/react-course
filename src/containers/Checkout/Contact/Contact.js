@@ -193,7 +193,7 @@ class Contact extends Component {
                         <div className={ContactStyle.FormWrapper}>
                             <form onSubmit={this.handleFormSubmission}>
                                 { formControls }
-                                <Button type="Success"
+                                <Button btnType="Success"
                                         fillStyle="Full"
                                         classes={ContactStyle.OrderBtn}
                                         disabled={!this.state.formValid}
