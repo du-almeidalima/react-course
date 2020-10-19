@@ -24,7 +24,7 @@ export const purchaseOrder = (orderData) => {
           dispatch(purchaseOrderSuccess(newOrder))
         })
         .catch(err => {
-          console.log('Error', err)
+          console.error('Error', err)
           dispatch(purchaseOrderFail())
         })
   }
