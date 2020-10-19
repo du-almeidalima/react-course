@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import Layout from "./containers/Layout/Layout";
@@ -14,15 +14,18 @@ function App(props) {
 
   props.onAuthAutoLogin();
 
+  console.log(props.isAuth)
   return (
     <BrowserRouter>
       <Layout>
         <Switch>
           <Route path="/" exact component={BurgerBuilder} />
           <Route path="/checkout" component={Checkout} />
-          <Route path="/orders" component={Orders} />
+          {/* React Guard */}
+          { props.isAuth ? <Route path="/orders" component={Orders} /> : null }
           <Route path="/logout" component={Logout} />
           <Route path="/auth" component={Auth} />
+          <Redirect to="/" />
         </Switch>
       </Layout>
     </BrowserRouter>
@@ -30,10 +33,16 @@ function App(props) {
 }
 
 // == REDUX ==
+const mapStateToProps = (state) => {
+  return {
+    isAuth: !!state.auth.userId
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuthAutoLogin: () => { dispatch(authActions.authAutoLogin()) }
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
