@@ -33,18 +33,18 @@ export const auth = (userData, authType) => {
   }
 }
 
+export const authLogout = () => {
+  return {
+    type: AUTH_LOGOUT
+  }
+}
+
 const startLogoutCountdown = (expiresIn) => {
   return dispatch => {
     setTimeout(() => {
       dispatch(authLogout())
     }, expiresIn * 1000)
   };
-}
-
-const authLogout = () => {
-  return {
-    type: AUTH_LOGOUT
-  }
 }
 
 const authStart = () => {
