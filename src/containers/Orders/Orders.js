@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom'
 
 import Order from "../../components/Order/Order";
 import burgerBuilderAPI from "../../api/burger-builder.api";
@@ -13,12 +14,15 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    this.props.onFetchOrders();
+    if (this.props.isAuth) {
+      this.props.onFetchOrders();
+    }
   }
 
   render() {
     return (
       <div>
+        { !this.props.isAuth ? <Redirect to=""/> : null }
         <h1 className="PageTitle">Orders</h1>
         { this.props.orders.map(order => (
           <Order key={order.id} ingredients={order.ingredients} price={+order.price}/>
@@ -32,7 +36,8 @@ class Orders extends Component {
 const mapStateToProps = (state) => {
   return {
     orders: state.order.orders,
-    isLoading: state.order.isLoading
+    isLoading: state.order.isLoading,
+    isAuth: !!state.auth.userId
   }
 }
 

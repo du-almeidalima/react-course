@@ -30,7 +30,7 @@ const buildControls = (props) => {
         disabled={!props.canPurchase}
         onClick={props.openPurchaseModal}
       >
-        Order Now!
+        { props.isAuth ? 'Order Now!' : 'Sign In to proceed' }
       </button>
     </div>
   );
