@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 
 import Layout from "./containers/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
-import Checkout from "./containers/Checkout/Checkout";
-import Orders from "./containers/Orders/Orders";
-import Auth from "./containers/Auth/Auth";
 import Logout from "./containers/Auth/Logout/Logout";
+import lazyLoadComponent from "./hoc/lazyLoadComponent/lazyLoadComponent";
 import {authActions} from "./store/actions/actions";
 
-function App(props) {
+const lazyAuthComponent = lazyLoadComponent(() => import('./containers/Auth/Auth'));
+const lazyCheckoutComponent = lazyLoadComponent(() => import('./containers/Checkout/Checkout'));
+const lazyOrderComponent = lazyLoadComponent(() => import('./containers/Orders/Orders'));
 
+function App(props) {
   const onAuthAutoLogin = props.onAuthAutoLogin;
 
   useEffect(onAuthAutoLogin, []);
@@ -21,11 +22,11 @@ function App(props) {
       <Layout>
         <Switch>
           <Route path="/" exact component={BurgerBuilder} />
-          <Route path="/checkout" component={Checkout} />
+          <Route path="/checkout" component={lazyCheckoutComponent} />
           {/* React Guard */}
-          { props.isAuth ? <Route path="/orders" component={Orders} /> : null }
+          { props.isAuth ? <Route path="/orders" component={lazyOrderComponent} /> : null }
           <Route path="/logout" component={Logout} />
-          <Route path="/auth" component={Auth} />
+          <Route path="/auth" component={ lazyAuthComponent } />
           <Redirect to="/" />
         </Switch>
       </Layout>
