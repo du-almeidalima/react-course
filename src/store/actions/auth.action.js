@@ -24,6 +24,13 @@ export const auth = (userData, authType) => {
     })
       .then(res => {
         const { idToken, localId, expiresIn } = res.data;
+        // Saving JWT in LS
+        localStorage.setItem('user', JSON.stringify({
+          idToken,
+          localId,
+          expiresIn: new Date(new Date().getTime() + (expiresIn * 1000))
+        }))
+
         dispatch(startLogoutCountdown(expiresIn))
         dispatch(authSuccess({ token: idToken, userId: localId }));
       })
@@ -35,6 +42,7 @@ export const auth = (userData, authType) => {
 }
 
 export const authLogout = () => {
+  localStorage.removeItem('user')
   return {
     type: AUTH_LOGOUT
   }
@@ -45,6 +53,31 @@ export const setAuthRedirectPath = (redirectPath) => {
     type: SET_AUTH_REDIRECT_PATH,
     payload: redirectPath
   }
+}
+
+export const authAutoLogin = () => {
+  return dispatch => {
+
+    const lsUser = JSON.parse(localStorage.getItem('user'));
+    if (!lsUser) {
+      dispatch(authLogout())
+    } else {
+      const expirationDate = new Date(lsUser.expiresIn)
+
+      // Checking if token is valid
+      if (expirationDate > new Date()) {
+        const token = lsUser.idToken;
+        const userId = lsUser.localId;
+
+        const remainingTime = new Date((expirationDate.getTime() - new Date().getTime()) / 1000).getTime();
+        dispatch(startLogoutCountdown(remainingTime));
+        dispatch(authSuccess({ token, userId }))
+      } else {
+        dispatch(authLogout())
+      }
+    }
+  }
+
 }
 
 const startLogoutCountdown = (expiresIn) => {

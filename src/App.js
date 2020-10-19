@@ -1,13 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { connect } from 'react-redux';
+
 import Layout from "./containers/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
 import Auth from "./containers/Auth/Auth";
 import Logout from "./containers/Auth/Logout/Logout";
+import {authActions} from "./store/actions/actions";
 
-function App() {
+function App(props) {
+
+  props.onAuthAutoLogin();
+
   return (
     <BrowserRouter>
       <Layout>
@@ -23,4 +29,11 @@ function App() {
   );
 }
 
-export default App;
+// == REDUX ==
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuthAutoLogin: () => { dispatch(authActions.authAutoLogin()) }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);
