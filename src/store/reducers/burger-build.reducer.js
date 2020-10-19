@@ -10,7 +10,8 @@ const INGREDIENTS_PRICE = new Map([
 const initialState = {
   ingredients: {},
   totalPrice: 4,
-  error: false
+  error: false,
+  building: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,7 +24,8 @@ const reducer = (state = initialState, action) => {
           ...state.ingredients,
           [action.payload]: state.ingredients[action.payload] + 1
         },
-        totalPrice: state.totalPrice + INGREDIENTS_PRICE.get(action.payload)
+        totalPrice: state.totalPrice + INGREDIENTS_PRICE.get(action.payload),
+        building: true
       }
 
     case actionTypes.REMOVE_INGREDIENT:
@@ -40,9 +42,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ingredients: updatedIngredients,
-        totalPrice
+        totalPrice,
+        building: true
       }
 
+    // This action is called whenever the BurgerBuilder page is visited, therefore resetting the building status
     case actionTypes.SET_INGREDIENTS:
       return {
         ...state,
@@ -53,7 +57,8 @@ const reducer = (state = initialState, action) => {
           meat: action.payload.bacon,
         },
         error: false,
-        totalPrice: 4.0
+        totalPrice: 4.0,
+        building: false
       }
 
     case actionTypes.FETCH_INGREDIENTS_ERROR:

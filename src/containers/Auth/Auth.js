@@ -6,6 +6,7 @@ import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { authActions } from "../../store/actions/actions";
+import { Redirect } from "react-router-dom";
 
 class Auth extends Component {
   state = {
@@ -44,6 +45,10 @@ class Auth extends Component {
     formValid: false,
     type: 'signIn'
   };
+
+  componentWillUnmount() {
+    this.props.onSetAuthRedirectPath('/');
+  }
 
   validateControl = (value, rules) => {
     let isValid = true;
@@ -148,6 +153,7 @@ class Auth extends Component {
 
     return (
       <Fragment>
+        { this.props.isAuth ? <Redirect to={this.props.authRedirectPath} /> : null}
         <h1 className="PageTitle">Login</h1>
         <div className={AuthStyle.FormWrapper}>
           {this.props.isLoading
@@ -175,14 +181,17 @@ class Auth extends Component {
 // == REDUX ==
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (userData, authType) => { dispatch(authActions.auth(userData, authType)) }
+    onAuth: (userData, authType) => { dispatch(authActions.auth(userData, authType)) },
+    onSetAuthRedirectPath: path => { dispatch(authActions.setAuthRedirectPath(path)) }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     isLoading: state.auth.isLoading,
-    error: state.auth.error
+    error: state.auth.error,
+    isAuth: !!state.auth.userId,
+    authRedirectPath: state.auth.authRedirectPath
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 
-import { burgerBuilderActions, orderActions } from '../../store/actions/actions';
+import {authActions, burgerBuilderActions, orderActions} from '../../store/actions/actions';
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
@@ -31,6 +31,8 @@ class BurgerBuilder extends Component {
     if (this.props.isAuth) {
       this.setState({ showPurchaseModal: true });
     } else {
+      // Saves were the user should be redirected to after signing in
+      this.props.onSetAuthRedirectPath('/checkout');
       this.props.history.push('/auth');
     }
   }
@@ -108,7 +110,8 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: (ingredientKey) => dispatch(burgerBuilderActions.addIngredient(ingredientKey)),
     onIngredientRemoved: (ingredientKey) => dispatch(burgerBuilderActions.removeIngredient(ingredientKey)),
     onFetchIngredients: () => dispatch(burgerBuilderActions.fetchIngredients()),
-    onPurchaseInit: () => { dispatch(orderActions.purchaseOrderInit()) }
+    onPurchaseInit: () => { dispatch(orderActions.purchaseOrderInit()) },
+    onSetAuthRedirectPath: (path) => { dispatch(authActions.setAuthRedirectPath(path)) }
   }
 }
 

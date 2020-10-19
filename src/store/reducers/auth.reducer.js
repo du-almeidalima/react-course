@@ -5,7 +5,8 @@ const initialState = {
   token: null,
   userId: null,
   error: null,
-  isLoading: false
+  isLoading: false,
+  authRedirectPath: '/'
 }
 
 // Reducer Helpers
@@ -36,12 +37,20 @@ const authLogout = (state) => {
   })
 }
 
+const setAuthRedirectPath = (state, action) => {
+  return updateStateObject(state, {
+    authRedirectPath: action.payload
+  });
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
       return updateStateObject(state, { error: null, isLoading: true });
     case actionTypes.AUTH_SUCCESS:
       return authSuccess(state, action);
+    case actionTypes.SET_AUTH_REDIRECT_PATH:
+      return setAuthRedirectPath(state, action);
     case actionTypes.AUTH_FAIL:
       return authError(state, action);
     case actionTypes.AUTH_LOGOUT:
