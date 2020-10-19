@@ -4,12 +4,13 @@ import Logo from '../../UI/Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 
 const toolbar = (props) => {
+  console.log(props.isAuth)
   return (
     <header className={ToolbarStyle.Toolbar}>
       <Logo classes={ToolbarStyle.Logo}/>
       <button className={ToolbarStyle.SideDrawer} onClick={props.toggleSideDrawer}/>
       <nav className={`${ToolbarStyle.Nav} ${ToolbarStyle.DesktopOnly}`}>
-        <NavigationItems />
+        <NavigationItems isAuth={props.isAuth}/>
       </nav>
     </header>
   );

@@ -5,6 +5,7 @@ import NavigationItems from "../NavigationItems/NavigationItems";
 import BackDrop from "../../UI/Backdrop/Backdrop";
 
 const sideDrawer = (props) => {
+  console.log(props.isAuth)
   return (
     <Fragment>
       <BackDrop show={props.show} clickHandler={props.close}/>
@@ -14,7 +15,7 @@ const sideDrawer = (props) => {
           <Logo classes={SideDrawerStyle.Logo} />
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuth={props.isAuth} />
         </nav>
       </div>
     </Fragment>
