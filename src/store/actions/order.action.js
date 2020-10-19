@@ -13,11 +13,12 @@ export const FETCH_ORDERS_FAIL = 'FETCH_ORDERS_FAIL';
 // ======= PURCHASE ORDER ACTIONS =======
 // ======================================
 export const purchaseOrder = (orderData) => {
-  return dispatch => {
+  return (dispatch, getState) => {
     // Dispatching Sync Action to Update UI Loading State
+    const token = getState().auth?.token;
     dispatch(purchaseOrderStart());
 
-    burgerBuilderAPI.post('/orders.json', orderData)
+    burgerBuilderAPI.post('/orders.json?auth=' + token, orderData)
         .then(resp => {
           const newOrder = {id: resp.data.name, ...orderData }
           dispatch(purchaseOrderSuccess(newOrder))
@@ -61,10 +62,10 @@ const purchaseOrderFail = () => {
 // ======================================
 
 export const fetchOrders = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const token = getState().auth?.token;
     dispatch(fetchOrdersStart());
-
-    burgerBuilderAPI.get("/orders.json")
+    burgerBuilderAPI.get("/orders.json?auth=" + token)
         .then((res) => {
           // FireBase return a Object with all the items, so we need to turn it into an array
           const ordersArr = Object.entries(res.data).map(([key, value]) => {
