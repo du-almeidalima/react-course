@@ -10,7 +10,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import burgerBuilderAPI from '../../api/burger-builder.api';
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     showPurchaseModal: false,
     isLoading: false,
@@ -24,7 +24,11 @@ class BurgerBuilder extends Component {
 
   // == METHODS ==
   canPurchase = (ingredients) => {
-    return Object.values(ingredients).some(i => i > 0);
+    if (ingredients) {
+      return Object.values(ingredients).some(i => i > 0);
+    }
+
+    return false;
   }
 
   purchaseModalHandler = () => {
