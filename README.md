@@ -1,33 +1,32 @@
-# React Course
+# React App with WebPack
 
-This is the Repository of the [React Course](https://www.udemy.com/course/react-the-complete-guide-incl-redux) with all its lessons saved as
-commits. This is also the repository of the course project, the [Burger Builder](https://du-react-burger-builder.web.app/).
+In this module, the React app was created as if was a JavaScript application.
+Then the following dependencies were added:
 
-## React Features learned in this Course
+For React
+- react
+- react-dom
+- react-router-module
 
-* Components (Functional and Class based)
-* Styling Components (Radium, Styled Components and CSS Modules)
-* Lifecycle methods
-* Modules
-* HTTP Requests and Interceptors with Axios
-* Router
-* Forms and Validation
-* Redux and Asynchronous Code with Redux-Thunk
+For Webpack
+- webpack@4
+- webpack-dev-server
+- webpack-cli
 
-## Sections
+Webpack Plugins/Loaders
+- babel-loader
+- style-loader
+- css-loader
+- postcss-loader
+- autoprefixer
+- url-loader (depends on file-loader)
+- html-webpack-plugin
 
-The lessons will be organized as commits, for instance
+Babel Plugins/Modules
+- @babel/core
+- @babel/preset-env
+- @babel/preset-react
+- @babel/preset-stage-2
+- @babel/plugin-proposal-class-properties
 
-"Section 2: The Basics"
-
-```txt
-  "[Section 'number'] : [lesson name]"
-```
-
-## Big Burger App
-
-![Big Burger App Home](./readme/app-homepage-screenshot.png "Big Burger App Home")
-
-## Author
-
-* **Eduardo Lima** - du-almeidalima
+All the configuration required for the React application work as if it were generated with CRA can be found in the
