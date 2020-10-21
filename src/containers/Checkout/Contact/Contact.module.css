@@ -1,0 +1,23 @@
+.ContactWrapper {
+  margin: var(--padding) auto;
+  width: 100%;
+}
+
+.FormWrapper {
+  margin: calc(2 * var(--padding)) auto;
+}
+
+.Title {
+  text-align: center;
+}
+
+.OrderBtn {
+  margin-top: var(--padding);
+  float: right;
+}
+
+@media (min-width: 768px) {
+  .ContactWrapper {
+      width: 75%;
+  }
+}

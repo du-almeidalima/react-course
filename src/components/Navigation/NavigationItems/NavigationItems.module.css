@@ -1,0 +1,22 @@
+.NavigationItemsWrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+  list-style: none;
+  margin-top: var(--padding);
+  padding: 0;
+  height: 100%;
+}
+
+@media (min-width: 576px) {
+  .NavigationItemsWrapper {
+    flex-flow: row nowrap;
+    margin: 0;
+  }
+
+  /*.NavigationItemsWrapper > *:last-of-type {*/
+  /*  display: none;*/
+  /*}*/
+}

@@ -1,0 +1,39 @@
+.SideDrawer {
+  background-color: var(--brown-100);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 55%;
+  height: 100%;
+  padding: calc(3 * var(--padding)) 0;
+  transition:  transform 200ms ease-in;
+}
+
+.Brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  padding: 0 10px;
+}
+
+.Logo {
+  height: 50px;
+  filter: drop-shadow(0 0 1px black);
+}
+
+.Open {
+  transform: translateX(0);
+}
+
+.Closed {
+  transform: translateX(-100%);
+}
+
+@media (min-width: 576px) {
+  .SideDrawer {
+    display: none;
+  }
+}
